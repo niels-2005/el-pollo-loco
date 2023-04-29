@@ -10,11 +10,19 @@ class World {
     ];
     canvas;
     ctx;
+    keyboard;
 
-    constructor(canvas) {
+    constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas; // this.canvas = canvas (index.html)
+        this.keyboard = keyboard; // this.keyboard = keyboard (definiert in game.js)
         this.draw();
+        this.setWorld();
+    }
+
+    // Verknüpfung Character & Welt
+    setWorld() {
+        this.character.world = this;
     }
 
     draw() {

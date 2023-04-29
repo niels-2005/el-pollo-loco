@@ -16,15 +16,11 @@ class Chicken extends MovableObject {
         this.animate();
     }
 
-    // lädt Images aus imageCache (moveable objects class)
     animate() {
         this.moveLeft(); // moveable Object Funktion
 
         setInterval(() => {
-            let i = this.currentImage % this.IMAGES_WALKING.length; // % (mathematischer Rest) => 0, 1, 2, 3, 4, 5! , nach 5 wird es wieder auf 0 gesetzt!
-            let path = this.IMAGES_WALKING[i]; // wenn IMAGES_WALKING = 5, durch die variable i wird es wieder auf 0 gesetzt!
-            this.img = this.imageCache[path];
-            this.currentImage++;
+            this.playAnimation();
         }, 1000 / 10);
     }
 }

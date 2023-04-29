@@ -7,6 +7,7 @@ class MovableObject {
     imageCache = {};
     currentImage = 0;
     speed = 0.2;
+    otherDirection = false; // variable um Bilder zu spiegeln
 
     // lädt das Standardbild von Pepe
     loadImage(path) {
@@ -21,6 +22,14 @@ class MovableObject {
             img.src = path;
             this.imageCache[path] = img;
         });
+    }
+
+    // (images) = WALKING_IMAGES
+    playAnimation(images) {
+        let i = this.currentImage % this.IMAGES_WALKING.length; // % (mathematischer Rest) => 0, 1, 2, 3, 4, 5! , nach 5 wird es wieder auf 0 gesetzt!
+        let path = this.IMAGES_WALKING[i]; // wenn IMAGES_WALKING = 5, durch die variable i wird es wieder auf 0 gesetzt!
+        this.img = this.imageCache[path];
+        this.currentImage++;
     }
 
     moveRight() {}

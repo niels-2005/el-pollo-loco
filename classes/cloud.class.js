@@ -6,7 +6,7 @@ class Cloud extends MovableObject {
     constructor() {
         super().loadImage('img/5_background/layers/4_clouds/1.png');
 
-        this.x = Math.random() * 500; // Zahl der x-Achse zwischen 0 und 500
+        this.x = Math.random() * 2000; // Zahl der x-Achse zwischen 0 und 500
         this.speed = 0.05;
         this.animate();
     }

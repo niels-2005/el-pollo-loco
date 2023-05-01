@@ -7,7 +7,7 @@ class DrawableObject {
     height = 150;
     width = 100;
 
-    // lädt das Standardbild von Pepe
+    // lädt das Standardbild
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
@@ -21,7 +21,7 @@ class DrawableObject {
     // world funktion
     drawFrame(ctx) {
         // zeichnet ein blauen Kasten um moveable objects (instance of = nur bei definierten Klassen (in dem Beispiel: Character oder Chicken))
-        if (this instanceof Character || this instanceof Chicken) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof ChickenSmall || this instanceof Endboss) {
             ctx.beginPath();
             ctx.lineWidth = '2';
             ctx.strokeStyle = 'blue';

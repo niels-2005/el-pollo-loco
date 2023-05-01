@@ -55,11 +55,11 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
-                this.walking_sound.play();
+                // this.walking_sound.play();
             }
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
-                this.walking_sound.play();
+                // this.walking_sound.play();
             }
             // wenn space gedrückt wird erhöhen wir die geschwindigkeit nach oben
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
@@ -84,6 +84,4 @@ class Character extends MovableObject {
             }
         }, 1000 / 20);
     }
-
-    jump() {}
 }

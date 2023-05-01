@@ -1,7 +1,17 @@
 body {
+    min-height: 80vh;
+    justify-content: center;
+    font-family: 'Roboto';
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: url('./img/10_images_extern/background-body.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+body h1 {
+    text-transform: uppercase;
 }
 
 canvas {

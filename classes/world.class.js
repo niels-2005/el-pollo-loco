@@ -26,12 +26,14 @@ class World {
 
     run() {
         setInterval(() => {
-            this.checkCollisions();
+            this.checkCollisionsWithChicken();
             this.checkCollisionsBottle();
             this.checkCollisionsCoin();
             this.checkThrowObjects();
+            this.killChickenWithBottle();
         }, 200);
     }
+
     // Bottles werfen (checken)
     checkThrowObjects() {
         if (this.keyboard.D) {
@@ -40,23 +42,72 @@ class World {
         }
     }
     // Kolisionen Checken (Character & Gegner)
-    checkCollisions() {
+    checkCollisionsWithChicken() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
+            if (this.character.isColliding(enemy) && !this.character.isHurt()) {
+                if (this.character.isAboveGround()) {
+                    this.killChicken(enemy);
+                } else {
+                    this.character.hit();
+                    this.statusBar.setPercentage(this.character.energy);
+                }
             }
         });
+    }
+
+    // killt Chicken wenn draufgesprungen, gibt Character extra jump nach oben
+    killChicken(enemy) {
+        this.character.speedY = 30;
+        enemy.isDead();
+
+        setTimeout(() => {
+            this.deleteEnemy(enemy);
+        }, 500);
+    }
+
+    // löscht Enemys wenn Tod aus Array
+    deleteEnemy(enemy) {
+        let i = this.level.enemies.indexOf(enemy);
+        if (i > -1) {
+            this.level.enemies.splice(i, 1);
+        }
     }
 
     // Kolisionen Checken (Character & Bottle)
     checkCollisionsBottle() {
         this.level.collectableObjectBottle.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
+                this.bottleCollected(bottle);
                 this.statusBarBottle.collected++;
                 this.statusBarBottle.setCollected(this.statusBarBottle.collected);
             }
         });
+    }
+
+    // wenn Bottle eingesammelt wird, wird es aus dem Array (aus der Map) gelöscht
+    bottleCollected(bottle) {
+        let i = this.level.collectableObjectBottle.indexOf(bottle);
+        this.level.collectableObjectBottle.splice(i, 1);
+    }
+
+    // chicken mit bottle killen
+    killChickenWithBottle() {
+        this.throwableObject.forEach((bottle) => {
+            this.level.enemies.forEach((enemy) => {
+                if (bottle.isColliding(enemy)) {
+                    this.chickenKilledWithBottle(enemy);
+                }
+            });
+        });
+    }
+
+    // gegner für tod erklären mit bottle
+    chickenKilledWithBottle(enemy) {
+        enemy.isDead();
+
+        setTimeout(() => {
+            this.deleteEnemy(enemy);
+        }, 500);
     }
 
     // Kolisionen Checken (Character & Coin)
@@ -65,8 +116,15 @@ class World {
             if (this.character.isColliding(coin)) {
                 this.statusBarCoin.collected++;
                 this.statusBarCoin.setCollected(this.statusBarCoin.collected);
+                this.coinCollected(coin);
             }
         });
+    }
+
+    // wenn coin eingesammelt wird, wird es aus dem Array (aus der Map) gelöscht
+    coinCollected(coin) {
+        let i = this.level.collectableObjectCoin.indexOf(coin);
+        this.level.collectableObjectCoin.splice(i, 1);
     }
 
     draw() {

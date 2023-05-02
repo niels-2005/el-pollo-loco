@@ -11,7 +11,7 @@ class ChickenSmall extends MovableObject {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
 
-        this.x = 500 + Math.random() * 1750; // Zahl der X Achse zwischen 350 & 650 ( Chickenplatzierung )
+        this.x = 600 + Math.random() * 2750; // Zahl der X Achse zwischen 350 & 650 ( Chickenplatzierung )
 
         this.speed = 0.15 + Math.random() * 0.5; // Geschwindkeit der Chicken unterschiedlich machen
         this.animate();

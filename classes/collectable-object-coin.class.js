@@ -1,7 +1,7 @@
 class CollectableObjectCoin extends MovableObject {
     height = 200;
     width = 200;
-    y = 290;
+    y = 75;
 
     IMAGES_COIN = ['img/8_coin/coin_1.png', 'img/8_coin/coin_2.png'];
 

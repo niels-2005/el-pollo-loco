@@ -32,11 +32,7 @@ class Endboss extends MovableObject {
 
     animate() {
         setInterval(() => {
-            this.moveLeft(); // moveable Object Funktion
-            this.otherDirection = false;
-        }, 1000 / 60);
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
+            this.playAnimation(this.IMAGES_ATTENTION);
         }, 200);
     }
 }

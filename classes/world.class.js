@@ -51,7 +51,7 @@ class World {
     // killt Chicken wenn draufgesprungen, gibt Character extra jump nach oben
     killChicken(enemy) {
         this.character.speedY = 30;
-        enemy.isDead();
+        enemy.energy = 0;
 
         setTimeout(() => {
             this.deleteEnemy(enemy);
@@ -113,7 +113,7 @@ class World {
 
     // gegner für tod erklären mit bottle
     chickenKilledWithBottle(enemy) {
-        enemy.isDead();
+        enemy.energy = 0;
 
         setTimeout(() => {
             this.deleteEnemy(enemy);
@@ -202,5 +202,3 @@ class World {
         this.ctx.restore();
     }
 }
-
-// meow

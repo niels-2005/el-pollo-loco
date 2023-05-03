@@ -81,7 +81,7 @@ class MovableObject extends DrawableObject {
 
     // lässt die Chicken nach links laufen
     movingLeft() {
-        this.movingLeft = setInterval(() => {
+        this.walkingLeft = setInterval(() => {
             this.moveLeft();
             this.otherDirection = false;
         }, 1000 / 60);
@@ -102,8 +102,8 @@ class MovableObject extends DrawableObject {
     // beendet die laufenden Intervalle wenn Chicken Tod
     deadChicken() {
         setTimeout(() => {
-            clearInterval(this.movingLeft);
+            clearInterval(this.walkingLeft);
             clearInterval(this.Death);
-        }, 50);
+        }, 100);
     }
 }

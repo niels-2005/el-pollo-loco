@@ -9,6 +9,7 @@ class World {
     statusBarBottle = new StatusBarBottle();
     statusBarCoin = new StatusBarCoin();
     throwableObject = [];
+    collectedBottles = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -33,18 +34,10 @@ class World {
             this.killChickenWithBottle();
         }, 200);
     }
-
-    // Bottles werfen (checken)
-    checkThrowObjects() {
-        if (this.keyboard.D) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-            this.throwableObject.push(bottle);
-        }
-    }
     // Kolisionen Checken (Character & Gegner)
     checkCollisionsWithChicken() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && !this.character.isHurt()) {
+            if (this.character.isColliding(enemy)) {
                 if (this.character.isAboveGround()) {
                     this.killChicken(enemy);
                 } else {
@@ -73,6 +66,22 @@ class World {
         }
     }
 
+    // Bottles werfen (checken) & Statusbar aktualisieren
+    checkThrowObjects() {
+        if (this.keyboard.D && this.collectedBottles > 0) {
+            this.throwBottle();
+            this.collectedBottles--;
+            this.statusBarBottle.collected--;
+            this.statusBarBottle.setCollected(this.statusBarBottle.collected);
+        }
+    }
+
+    // hilfsfunktion um code kürzer zu machen (bottle werfen)
+    throwBottle() {
+        let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+        this.throwableObject.push(bottle);
+    }
+
     // Kolisionen Checken (Character & Bottle)
     checkCollisionsBottle() {
         this.level.collectableObjectBottle.forEach((bottle) => {
@@ -86,6 +95,7 @@ class World {
 
     // wenn Bottle eingesammelt wird, wird es aus dem Array (aus der Map) gelöscht
     bottleCollected(bottle) {
+        this.collectedBottles++;
         let i = this.level.collectableObjectBottle.indexOf(bottle);
         this.level.collectableObjectBottle.splice(i, 1);
     }
@@ -143,6 +153,7 @@ class World {
         this.ctx.translate(this.camera_x, 0); // Kamera (wieder) verschieben
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.endboss);
         this.addObjectsToMap(this.level.collectableObjectCoin);
         this.addObjectsToMap(this.level.collectableObjectBottle);
         this.addObjectsToMap(this.throwableObject);
@@ -190,3 +201,5 @@ class World {
         this.ctx.restore();
     }
 }
+
+// meow

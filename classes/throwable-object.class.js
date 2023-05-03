@@ -22,14 +22,22 @@ class ThrowableObject extends MovableObject {
 
         this.speedY = 30;
         this.applyGravity();
-        setInterval(() => {
-            this.x += 10;
-        }, 25);
+        this.throwingLeftOrRight();
     }
 
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_THROWING_BOTTLE);
         }, 50);
+    }
+
+    throwingLeftOrRight() {
+        setInterval(() => {
+            if (!this.otherDirection) {
+                this.x -= 10;
+            } else {
+                this.x += 10;
+            }
+        }, 25);
     }
 }

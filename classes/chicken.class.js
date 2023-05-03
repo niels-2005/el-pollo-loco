@@ -17,17 +17,6 @@ class Chicken extends MovableObject {
         this.x = 600 + Math.random() * 2000; // Zahl der X Achse zwischen 350 & 650 ( Chickenplatzierung )
 
         this.speed = 0.15 + Math.random() * 0.5; // Geschwindkeit der Chicken unterschiedlich machen
-        this.animateChicken();
-    }
-
-    animateChicken() {
-        setInterval(() => {
-            this.moveLeft(); // moveable Object Funktion
-            this.otherDirection = false;
-        }, 1000 / 60);
-        // Animations abspielen in bestimmten Situationen
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
-        }, 1000 / 10);
+        this.chickenAnimations();
     }
 }

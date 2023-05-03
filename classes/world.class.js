@@ -78,7 +78,7 @@ class World {
 
     // hilfsfunktion um code kürzer zu machen (bottle werfen)
     throwBottle() {
-        let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+        let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.character.otherDirection);
         this.throwableObject.push(bottle);
     }
 
@@ -181,7 +181,8 @@ class World {
         // zeichnet Bilder
         mo.draw(this.ctx);
         // zeichnet Border um Enemy
-        mo.drawFrame(this.ctx);
+
+        // mo.drawFrame(this.ctx);
 
         // funktion um zu vermeiden das alles gespiegelt wird
         if (mo.otherDirection) {

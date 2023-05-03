@@ -72,4 +72,38 @@ class MovableObject extends DrawableObject {
     isDead() {
         return this.energy == 0;
     }
+
+    // funktion für die animationen der small & normal chicken
+    chickenAnimations() {
+        this.movingLeft();
+        this.checkingDeath();
+    }
+
+    // lässt die Chicken nach links laufen
+    movingLeft() {
+        this.movingLeft = setInterval(() => {
+            this.moveLeft();
+            this.otherDirection = false;
+        }, 1000 / 60);
+    }
+
+    // checkt ob ein Chicken Tod ist, wenn nicht läuft es normal weiter
+    checkingDeath() {
+        this.Death = setInterval(() => {
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+                this.deadChicken();
+            } else {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+        }, 150);
+    }
+
+    // beendet die laufenden Intervalle wenn Chicken Tod
+    deadChicken() {
+        setTimeout(() => {
+            clearInterval(this.movingLeft);
+            clearInterval(this.Death);
+        }, 50);
+    }
 }

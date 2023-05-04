@@ -60,7 +60,7 @@ class Endboss extends MovableObject {
         setInterval(() => {
             if (this.x - world.character.x <= 600 && !arrivedEndboss) {
                 this.endbossAttention();
-            } else if (this.x - world.character.x < 50) {
+            } else if (this.x - world.character.x < 30) {
                 this.playAnimation(this.IMAGES_ATTACK);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
@@ -69,7 +69,7 @@ class Endboss extends MovableObject {
             } else if (arrivedEndboss === true) {
                 this.walkingAnimation();
             }
-        }, 150);
+        }, 130);
     }
 
     // wenn character boss erreicht werden attention images abgespielt und durch die variable

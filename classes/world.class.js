@@ -8,6 +8,7 @@ class World {
     statusBarHealth = new StatusBarHealth();
     statusBarBottle = new StatusBarBottle();
     statusBarCoin = new StatusBarCoin();
+    statusBarEndboss = new StatusBarEndboss();
     throwableObject = [];
     collectedBottles = 0;
     endbossNotHitable = false;
@@ -99,6 +100,7 @@ class World {
                 }
             });
         });
+        this.statusBarEndboss.setPercentage(world.level.endboss[0].energy);
     }
 
     // endboss wurde angegriffen
@@ -198,6 +200,9 @@ class World {
         this.addToMap(this.statusBarHealth); // StatusBar einfügen damit sie fixed bleibt
         this.addToMap(this.statusBarBottle);
         this.addToMap(this.statusBarCoin);
+        if (arrivedEndboss === true) {
+            this.addToMap(this.statusBarEndboss);
+        }
 
         this.ctx.translate(this.camera_x, 0); // Kamera (wieder) verschieben
         this.addToMap(this.character);

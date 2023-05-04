@@ -71,8 +71,8 @@ class MovableObject extends DrawableObject {
 
     // endboss wenn er mit einer bottle getroffen wird
     hittedByBottle() {
-        this.energy -= 20;
-        if (this.energy < 0) {
+        this.energy -= 19;
+        if (this.energy < 10) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime(); // speichert Zeit in Zahlenform, um zu speichern wann ein object verletzt wurde

@@ -5,11 +5,14 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    statusBar = new StatusBarHealth();
+    statusBarHealth = new StatusBarHealth();
     statusBarBottle = new StatusBarBottle();
     statusBarCoin = new StatusBarCoin();
     throwableObject = [];
     collectedBottles = 0;
+    endbossNotHitable = false;
+    characterNotHitable = false;
+    bottleCollidesWithEndboss = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -28,10 +31,12 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisionsWithChicken();
+            this.checkCollisionsWithEndboss();
             this.checkCollisionsBottle();
             this.checkCollisionsCoin();
             this.checkThrowObjects();
             this.killChickenWithBottle();
+            this.attackEndboss();
         }, 200);
     }
     // Kolisionen Checken (Character & Gegner)
@@ -42,7 +47,7 @@ class World {
                     this.killChicken(enemy);
                 } else {
                     this.character.hit();
-                    this.statusBar.setPercentage(this.character.energy);
+                    this.statusBarHealth.setPercentage(this.character.energy);
                 }
             }
         });
@@ -64,6 +69,50 @@ class World {
         if (i > -1) {
             this.level.enemies.splice(i, 1);
         }
+    }
+
+    // checkt die Collision vom Character & Endboss, wenn kollidiert, character bekommt Schaden
+    checkCollisionsWithEndboss() {
+        this.level.endboss.forEach((endboss) => {
+            if (this.character.isColliding(endboss) && !this.characterNotHitable) {
+                this.character.hittedByEndboss();
+                this.statusBarHealth.setPercentage(this.character.energy);
+                this.characterInvulnerable();
+            }
+        });
+    }
+
+    // gibt Character 1,5s unverwundbarkeit wenn kollidiert
+    characterInvulnerable() {
+        this.characterNotHitable = true;
+        setTimeout(() => {
+            this.characterNotHitable = false;
+        }, 1500);
+    }
+
+    // wenn bottle mit endboss kollidiert, wird der endboss angegriffen
+    attackEndboss() {
+        this.throwableObject.forEach((bottle) => {
+            this.level.endboss.forEach((endboss) => {
+                if (bottle.isColliding(endboss) && !this.endbossNotHitable) {
+                    this.endbossGotAttacked(endboss);
+                }
+            });
+        });
+    }
+
+    // endboss wurde angegriffen
+    endbossGotAttacked(endboss) {
+        endboss.hittedByBottle();
+        this.endbossInvulnerable();
+    }
+
+    // nach angriff 1,5s unverwundbarkeit
+    endbossInvulnerable() {
+        this.endbossNotHitable = true;
+        setTimeout(() => {
+            this.endbossNotHitable = false;
+        }, 1500);
     }
 
     // Bottles werfen (checken) & Statusbar aktualisieren
@@ -146,7 +195,7 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.ctx.translate(-this.camera_x, 0); // Kamera (zurück) verschieben
 
-        this.addToMap(this.statusBar); // StatusBar einfügen damit sie fixed bleibt
+        this.addToMap(this.statusBarHealth); // StatusBar einfügen damit sie fixed bleibt
         this.addToMap(this.statusBarBottle);
         this.addToMap(this.statusBarCoin);
 

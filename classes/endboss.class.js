@@ -42,20 +42,59 @@ class Endboss extends MovableObject {
 
     height = 400;
     width = 300;
-    y = 55;
+    y = 50;
 
     constructor() {
         super().loadImage(this.IMAGES_ATTENTION[0]);
         this.loadImages(this.IMAGES_ATTENTION);
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_ATTACK);
+        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DEAD);
         this.x = 3200;
-        this.speed = 0.2;
-        this.animate();
+        this.speed = 8;
+        this.endbossAnimations();
     }
 
-    animate() {
+    endbossAnimations() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_ATTENTION);
-        }, 200);
+            if (this.x - world.character.x <= 600 && !arrivedEndboss) {
+                this.endbossAttention();
+            } else if (this.x - world.character.x < 50) {
+                this.playAnimation(this.IMAGES_ATTACK);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            } else if (this.isDead()) {
+                this.deathAnimation();
+            } else if (arrivedEndboss === true) {
+                this.walkingAnimation();
+            }
+        }, 150);
+    }
+
+    // wenn character boss erreicht werden attention images abgespielt und durch die variable
+    // arrivedEndboss nach 1,5s abgebrochen
+    endbossAttention() {
+        this.playAnimation(this.IMAGES_ATTENTION);
+        setTimeout(() => {
+            arrivedEndboss = true;
+        }, 1000);
+    }
+
+    // zeigt die Images Death und nach 0,5s fliegt der Endboss unten aus dem Game
+    deathAnimation() {
+        this.playAnimation(this.IMAGES_DEAD);
+        setTimeout(() => {
+            setInterval(() => {
+                this.y += 20;
+            }, 50);
+        }, 500);
+    }
+
+    // lässt Endboss nach links laufen
+    walkingAnimation() {
+        this.playAnimation(this.IMAGES_WALKING);
+        this.moveLeft();
+        this.otherDirection = false;
     }
 }

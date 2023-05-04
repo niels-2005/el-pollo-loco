@@ -79,7 +79,7 @@ class Character extends MovableObject {
     IMAGES_HURT = ['img/2_character_pepe/4_hurt/H-41.png', 'img/2_character_pepe/4_hurt/H-42.png', 'img/2_character_pepe/4_hurt/H-43.png'];
 
     world; // mit dieser Variable kann man auf alle Variablen der World zugreifen
-    speed = 10;
+    speed = 5;
     walking_sound = new Audio('audio/running.wav');
 
     constructor() {
@@ -113,9 +113,9 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         // Animations abspielen in bestimmten Situationen
-        setInterval(() => {
+        this.characterInterval = setInterval(() => {
             if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
+                this.deathAnimation();
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
@@ -126,5 +126,12 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_IDLE);
             }
         }, 1000 / 15);
+    }
+
+    deathAnimation() {
+        this.playAnimation(this.IMAGES_DEAD);
+        setTimeout(() => {
+            clearInterval(this.characterInterval);
+        }, 200);
     }
 }

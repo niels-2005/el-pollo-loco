@@ -59,6 +59,26 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    // wenn Character vom Endboss getroffen wird, zieht es nicht 5 sondern 19 Leben ab
+    hittedByEndboss() {
+        this.energy -= 19;
+        if (this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime(); // speichert Zeit in Zahlenform, um zu speichern wann ein object verletzt wurde
+        }
+    }
+
+    // endboss wenn er mit einer bottle getroffen wird
+    hittedByBottle() {
+        this.energy -= 20;
+        if (this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime(); // speichert Zeit in Zahlenform, um zu speichern wann ein object verletzt wurde
+        }
+    }
+
     // wenn ein Objekt getroffen wird speichert man die genaue Zeit
     // timepassed = neue Zeit - (gespeicherte) alte Zeit
     // um zu definieren wie viel Zeit vergangen ist

@@ -43,6 +43,12 @@ class Endboss extends MovableObject {
     height = 400;
     width = 300;
     y = 50;
+    offset = {
+        top: 50,
+        bottom: 20,
+        left: 30,
+        right: 30,
+    };
 
     constructor() {
         super().loadImage(this.IMAGES_ATTENTION[0]);

@@ -13,7 +13,6 @@ class World {
     collectedBottles = 0;
     endbossNotHitable = false;
     characterNotHitable = false;
-    bottleCollidesWithEndboss = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -43,7 +42,7 @@ class World {
     // Kolisionen Checken (Character & Gegner)
     checkCollisionsWithChicken() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isColliding(enemy) && !this.character.isHurt()) {
                 if (this.character.isAboveGround()) {
                     this.killChicken(enemy);
                 } else {
@@ -76,6 +75,7 @@ class World {
     checkCollisionsWithEndboss() {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss) && !this.characterNotHitable) {
+                this.bottleCollidesWithEndboss = true;
                 this.character.hittedByEndboss();
                 this.statusBarHealth.setPercentage(this.character.energy);
                 this.characterInvulnerable();
@@ -121,14 +121,19 @@ class World {
     checkThrowObjects() {
         if (this.keyboard.D && this.collectedBottles > 0) {
             this.throwBottle();
-            this.collectedBottles--;
-            this.statusBarBottle.collected--;
-            this.statusBarBottle.setCollected(this.statusBarBottle.collected);
+            this.reduceBottleBar();
         }
     }
 
-    // hilfsfunktion um code kürzer zu machen (bottle werfen)
+    // statusBarBottle updaten (minus)
+    reduceBottleBar() {
+        this.statusBarBottle.collected--;
+        this.statusBarBottle.setCollected(this.statusBarBottle.collected);
+    }
+
+    // definiert eine bottle und pusht sie in ein array, wodurch bottles geworfen werden können
     throwBottle() {
+        this.collectedBottles--;
         let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.character.otherDirection);
         this.throwableObject.push(bottle);
     }
@@ -138,8 +143,7 @@ class World {
         this.level.collectableObjectBottle.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
                 this.bottleCollected(bottle);
-                this.statusBarBottle.collected++;
-                this.statusBarBottle.setCollected(this.statusBarBottle.collected);
+                this.increaseBottleBar();
             }
         });
     }
@@ -149,6 +153,12 @@ class World {
         this.collectedBottles++;
         let i = this.level.collectableObjectBottle.indexOf(bottle);
         this.level.collectableObjectBottle.splice(i, 1);
+    }
+
+    // bottle bar updaten (plus)
+    increaseBottleBar() {
+        this.statusBarBottle.collected++;
+        this.statusBarBottle.setCollected(this.statusBarBottle.collected);
     }
 
     // chicken mit bottle killen
@@ -175,11 +185,16 @@ class World {
     checkCollisionsCoin() {
         this.level.collectableObjectCoin.forEach((coin) => {
             if (this.character.isColliding(coin)) {
-                this.statusBarCoin.collected++;
-                this.statusBarCoin.setCollected(this.statusBarCoin.collected);
+                this.increaseCoinBar();
                 this.coinCollected(coin);
             }
         });
+    }
+
+    // erhöht wenn Coins eingesammelt werden die Status Bar Coin
+    increaseCoinBar() {
+        this.statusBarCoin.collected++;
+        this.statusBarCoin.setCollected(this.statusBarCoin.collected);
     }
 
     // wenn coin eingesammelt wird, wird es aus dem Array (aus der Map) gelöscht
@@ -188,32 +203,47 @@ class World {
         this.level.collectableObjectCoin.splice(i, 1);
     }
 
+    // zeichnet alles in der Welt
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // cleart bei jedem zeichnen das canvas
+        this.addBackgroundObjects();
+        this.addStatusBars();
+        this.addMoveableObjects();
+        this.drawingFrames();
+    }
 
-        this.ctx.translate(this.camera_x, 0); // Kamera verschieben
-        // moveable Objects zeichnen
+    // fügt die Hintergrundlandschaft hinzu
+    addBackgroundObjects() {
+        this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
-        this.ctx.translate(-this.camera_x, 0); // Kamera (zurück) verschieben
+        this.ctx.translate(-this.camera_x, 0);
+    }
 
-        this.addToMap(this.statusBarHealth); // StatusBar einfügen damit sie fixed bleibt
+    // fügt Statusbars hinzu
+    addStatusBars() {
+        this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarBottle);
         this.addToMap(this.statusBarCoin);
         if (arrivedEndboss === true) {
             this.addToMap(this.statusBarEndboss);
         }
+    }
 
-        this.ctx.translate(this.camera_x, 0); // Kamera (wieder) verschieben
+    // fügt Moveable Objects hinzu
+    addMoveableObjects() {
+        this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.endboss);
         this.addObjectsToMap(this.level.collectableObjectCoin);
         this.addObjectsToMap(this.level.collectableObjectBottle);
         this.addObjectsToMap(this.throwableObject);
-        this.ctx.translate(-this.camera_x, 0); // Kamera (wieder zurück) verschieben
+        this.ctx.translate(-this.camera_x, 0);
+    }
 
-        // function für fps (je nach Grafikkarte)
+    // function für fps (je nach Grafikkarte)
+    drawingFrames() {
         let self = this;
         requestAnimationFrame(function () {
             self.draw();

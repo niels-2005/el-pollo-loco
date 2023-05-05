@@ -5,9 +5,15 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5; // beschleunigung des objects
     energy = 100; // leben
     lastHit = 0; // für die hurt animation
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+    };
 
-    // Gravitation (für jump)
-    applyGravity() {
+    // Gravitation für die bottle
+    applyGravityBottle() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
@@ -16,11 +22,23 @@ class MovableObject extends DrawableObject {
         }, 1000 / 25);
     }
 
+    // applyGravity für den character, wenn character unter der y-achse landen will wird er wieder auf 105 gesetzt
+    applyGravityCharacter() {
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            } else {
+                this.y = 105;
+            }
+        }, 1000 / 25);
+    }
+
     isAboveGround() {
         if (this instanceof ThrowableObject && this.y < 300) {
             return true;
         } else {
-            return this.y < 100;
+            return this.y < 105;
         }
     }
 
@@ -46,7 +64,12 @@ class MovableObject extends DrawableObject {
 
     // Bessere Formel zur Kollisionsberechnung (Genauer)
     isColliding(mo) {
-        return this.x + this.width > mo.x && this.y + this.height > mo.y && this.x < mo.x && this.y < mo.y + mo.height;
+        return (
+            this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
+        );
     }
 
     // funktion um objekten "Leben" abzuziehen
@@ -85,7 +108,7 @@ class MovableObject extends DrawableObject {
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000; // ms in s
-        return timepassed < 1; // 1 = wielange das object verletzt ist
+        return timepassed < 1.2; // 1 = wielange das object verletzt ist
     }
 
     // funktion die Objekte "tod" erklärt, wenn Objekt Energy = 0

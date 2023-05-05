@@ -1,5 +1,11 @@
 class ThrowableObject extends MovableObject {
     height = 100;
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: -8,
+    };
 
     IMAGES_THROWING_BOTTLE = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -31,7 +37,7 @@ class ThrowableObject extends MovableObject {
     // bottles werfen
     throw() {
         this.speedY = 30;
-        this.applyGravity();
+        this.applyGravityBottle();
         this.throwingLeftOrRight();
     }
 

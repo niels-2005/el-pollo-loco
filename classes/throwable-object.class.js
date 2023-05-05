@@ -15,7 +15,6 @@ class ThrowableObject extends MovableObject {
     ];
 
     IMAGES_BOTTLE_SPLASH = [
-        'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/4_bottle_splash.png',
@@ -54,15 +53,27 @@ class ThrowableObject extends MovableObject {
         setTimeout(() => clearInterval(this.throwingInterval), 1000);
     }
 
-    // bottle Animations in der Luft & Boden
+    // bottle Animations in der Luft & beim Aufprallen
     bottleAnimations() {
+        this.splashOrThrowingAnimation();
+        this.updateBottleCollidedWithEndboss();
+    }
+
+    splashOrThrowingAnimation() {
         this.splashAnimation = setInterval(() => {
-            if (this.y > 240) {
+            if (this.y > 240 || world.bottleCollidedWithEndboss) {
                 this.playSplashAnimation();
             } else {
                 this.playAnimation(this.IMAGES_THROWING_BOTTLE);
             }
         }, 1000 / 15);
+    }
+
+    // setzt die world variable bottleCollidedWithEndboss wieder auf false
+    updateBottleCollidedWithEndboss() {
+        setTimeout(() => {
+            world.bottleCollidedWithEndboss = false;
+        }, 50);
     }
 
     // wenn kollidiert oder boden = splash bottle
@@ -78,6 +89,14 @@ class ThrowableObject extends MovableObject {
     splashEffect() {
         setInterval(() => {
             this.y += 10;
+            this.deleteBottle();
         }, 70);
+    }
+
+    // "deleting" bottle
+    deleteBottle() {
+        setTimeout(() => {
+            this.y = 500;
+        }, 300);
     }
 }

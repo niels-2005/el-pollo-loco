@@ -64,27 +64,43 @@ class Endboss extends MovableObject {
 
     endbossAnimations() {
         setInterval(() => {
-            if (this.x - world.character.x <= 600 && !arrivedEndboss) {
-                this.endbossAttention();
-            } else if (this.x - world.character.x < 30) {
-                this.playAnimation(this.IMAGES_ATTACK);
+            if (this.arrivingEndboss()) {
+                this.endbossAttentionAnimation();
+            } else if (this.CharacterIsNearEndboss()) {
+                this.endbossAttackingAnimation();
             } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
+                this.endbossIsHurtAnimation();
             } else if (this.isDead()) {
                 this.deathAnimation();
-            } else if (arrivedEndboss === true) {
+            } else if (this.endbossIsWalking()) {
                 this.walkingAnimation();
             }
         }, 130);
     }
 
+    arrivingEndboss() {
+        return this.x - world.character.x <= 600 && !arrivedEndboss;
+    }
+
     // wenn character boss erreicht werden attention images abgespielt und durch die variable
-    // arrivedEndboss nach 1,5s abgebrochen
-    endbossAttention() {
+    // arrivedEndboss nach 1s abgebrochen
+    endbossAttentionAnimation() {
         this.playAnimation(this.IMAGES_ATTENTION);
         setTimeout(() => {
             arrivedEndboss = true;
         }, 1000);
+    }
+
+    CharacterIsNearEndboss() {
+        return this.x - world.character.x < 30;
+    }
+
+    endbossAttackingAnimation() {
+        this.playAnimation(this.IMAGES_ATTACK);
+    }
+
+    endbossIsHurtAnimation() {
+        this.playAnimation(this.IMAGES_HURT);
     }
 
     // zeigt die Images Death und nach 0,5s fliegt der Endboss unten aus dem Game
@@ -95,6 +111,10 @@ class Endboss extends MovableObject {
                 this.y += 20;
             }, 50);
         }, 500);
+    }
+
+    endbossIsWalking() {
+        return arrivedEndboss === true;
     }
 
     // lässt Endboss nach links laufen

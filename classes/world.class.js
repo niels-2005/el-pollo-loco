@@ -13,6 +13,7 @@ class World {
     collectedBottles = 0;
     endbossNotHitable = false;
     characterNotHitable = false;
+    bottleCollidedWithEndboss = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -75,7 +76,6 @@ class World {
     checkCollisionsWithEndboss() {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss) && !this.characterNotHitable) {
-                this.bottleCollidesWithEndboss = true;
                 this.character.hittedByEndboss();
                 this.statusBarHealth.setPercentage(this.character.energy);
                 this.characterInvulnerable();
@@ -96,6 +96,7 @@ class World {
         this.throwableObject.forEach((bottle) => {
             this.level.endboss.forEach((endboss) => {
                 if (bottle.isColliding(endboss) && !this.endbossNotHitable) {
+                    this.bottleCollidedWithEndboss = true;
                     this.endbossGotAttacked(endboss);
                 }
             });

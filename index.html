@@ -28,9 +28,53 @@
         <script src="./levels/level1.js"></script>
         <script src="./js/game.js"></script>
     </head>
-    <body onload="init()">
-        <h1>EL POLLO LOCO</h1>
-
-        <canvas id="canvas" width="720" height="480"></canvas>
+    <body>
+        <div id="rotate-phone-screen" class="d-none">
+            <p>Please rotate your Phone</p>
+        </div>
+        <div id="start-screen-container">
+            <button onclick="startGame()">Start</button>
+            <button onclick="openStoryTextContainer()">Story</button>
+            <button onclick="openControlsTextContainer()">Controls</button>
+        </div>
+        <div id="loading-animation-container" class="d-none">
+            <div class="loading-animation"></div>
+        </div>
+        <div id="story-container" class="d-none">
+            <div onclick="closeStoryTextContainer()" class="close-icon-container">
+                <div class="close-icon"></div>
+            </div>
+            <p>
+                Pepe, a brave Mexican, faces a great challenge as his beloved village is threatened by an army of evil chickens led by El Pollo Pollo.
+                To save his village, Pepe embarks on a dangerous adventure through the Mexican desert. With his skilled throwing technique, he hurls
+                salsa bottles at the chickens to defeat them and overcome treacherous obstacles. Along his journey, he ultimately confronts El Pollo
+                Loco in an epic showdown.
+            </p>
+        </div>
+        <div id="controls-container" class="d-none">
+            <div onclick="closeControlsTextContainer()" class="close-icon-container">
+                <div class="close-icon"></div>
+            </div>
+            <h3>Game Controls</h3>
+            <div class="control-container">
+                <div class="move-left-container">
+                    <div><img src="./img/10_images_extern/arrow-left.png" alt="" /></div>
+                    <div class="font-size-40px">Move Left</div>
+                </div>
+                <div class="move-right-container">
+                    <div><img src="./img/10_images_extern/arrow-right.png" alt="" /></div>
+                    <div class="font-size-40px">Move Right</div>
+                </div>
+                <div class="space-container">
+                    <div class="font-size-40px">SPACE</div>
+                    <div class="font-size-40px">Jump</div>
+                </div>
+                <div class="throw-bottle-container">
+                    <div class="font-size-40px">D</div>
+                    <div class="font-size-40px">Throw Bottle</div>
+                </div>
+            </div>
+        </div>
+        <canvas id="canvas" class="d-none" width="820" height="480"></canvas>
     </body>
 </html>

@@ -79,7 +79,7 @@ class Endboss extends MovableObject {
     }
 
     arrivingEndboss() {
-        return this.x - world.character.x <= 600 && !arrivedEndboss;
+        return this.x - world.character.x <= 800 && !arrivedEndboss;
     }
 
     // wenn character boss erreicht werden attention images abgespielt und durch die variable

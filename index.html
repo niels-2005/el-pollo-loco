@@ -27,6 +27,7 @@
         <script src="./classes/endboss.class.js"></script>
         <script src="./levels/level1.js"></script>
         <script src="./js/game.js"></script>
+        <script src="./js/game-sound.js"></script>
     </head>
     <body>
         <div id="rotate-phone-screen" class="d-none">
@@ -45,7 +46,7 @@
                 <div class="close-icon"></div>
             </div>
             <p>
-                Pepe, a brave Mexican, faces a great challenge as his beloved village is threatened by an army of evil chickens led by El Pollo Pollo.
+                Pepe, a brave Mexican, faces a great challenge as his beloved village is threatened by an army of evil chickens led by El Pollo Loco.
                 To save his village, Pepe embarks on a dangerous adventure through the Mexican desert. With his skilled throwing technique, he hurls
                 salsa bottles at the chickens to defeat them and overcome treacherous obstacles. Along his journey, he ultimately confronts El Pollo
                 Loco in an epic showdown.
@@ -74,6 +75,27 @@
                     <div class="font-size-40px">Throw Bottle</div>
                 </div>
             </div>
+        </div>
+        <div id="you-lost-container" class="d-none">
+            <button onclick="restartGameLose()">Restart</button>
+            <button onclick="openHintsTextContainer()">Hints</button>
+            <button onclick="goToMainMenuLose()">Main Menu</button>
+        </div>
+        <div id="hints-container" class="d-none">
+            <div onclick="closeHintsTextContainer()" class="close-icon-container">
+                <div class="close-icon"></div>
+            </div>
+            <h3>Hints</h3>
+            <div class="hints-container-span">
+                <span>Salsa bottles should be handled with care.</span>
+                <span>The chickens can be eliminated in two ways.</span>
+                <span>The end boss can only be attacked in one way.</span>
+                <span>The end boss has a hidden ability.</span>
+            </div>
+        </div>
+        <div id="you-win-container" class="d-none">
+            <button onclick="restartGameWin()">Restart</button>
+            <button onclick="goToMainMenuWin()">Main Menu</button>
         </div>
         <canvas id="canvas" class="d-none" width="820" height="480"></canvas>
     </body>

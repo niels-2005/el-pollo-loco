@@ -80,8 +80,7 @@ class Character extends MovableObject {
     IMAGES_HURT = ['img/2_character_pepe/4_hurt/H-41.png', 'img/2_character_pepe/4_hurt/H-42.png', 'img/2_character_pepe/4_hurt/H-43.png'];
 
     world; // mit dieser Variable kann man auf alle Variablen der World zugreifen
-    speed = 5;
-    walking_sound = new Audio('audio/running.wav');
+    speed = 6;
 
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/long_idle/I-11.png');
@@ -133,6 +132,7 @@ class Character extends MovableObject {
 
     deathAnimation() {
         this.playAnimation(this.IMAGES_DEAD);
+        gameLost();
         setTimeout(() => {
             clearInterval(this.characterInterval);
         }, 200);

@@ -58,7 +58,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.x = 3200;
-        this.speed = 8;
+        this.speed = 15;
         this.endbossAnimations();
     }
 
@@ -106,6 +106,7 @@ class Endboss extends MovableObject {
     // zeigt die Images Death und nach 0,5s fliegt der Endboss unten aus dem Game
     deathAnimation() {
         this.playAnimation(this.IMAGES_DEAD);
+        gameWon();
         setTimeout(() => {
             setInterval(() => {
                 this.y += 20;

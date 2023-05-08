@@ -42,6 +42,7 @@ class ThrowableObject extends MovableObject {
 
     // checkt ob nach links oder rechts geworfen wird und beendet das interval wieder
     throwingLeftOrRight() {
+        throwBottleSound.play();
         this.throwingInterval = setInterval(() => {
             if (this.characterDirection) {
                 this.x -= 10;
@@ -79,6 +80,7 @@ class ThrowableObject extends MovableObject {
     // wenn kollidiert oder boden = splash bottle
     playSplashAnimation() {
         this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
+        bottleSplashSound.play();
         this.speed = 0;
         this.height = 100;
         this.splashEffect();

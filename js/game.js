@@ -7,6 +7,8 @@ function startGame() {
     startLoadingScreen();
     setTimeout(() => {
         showCanvas();
+        gameSounds();
+        initLevel();
         canvas = document.getElementById('canvas');
         world = new World(canvas, keyboard);
     }, 1000);
@@ -14,18 +16,38 @@ function startGame() {
 
 // wenn character tod wird you-lost-container angezeigt
 function gameLost() {
+    stopBackgroundMusic();
+    showGameLostContainer();
+}
+
+// canvas bekommt d-none, lost container wird angezeigt
+function showGameLostContainer() {
     setTimeout(() => {
+        gameLoseSound.play();
         document.getElementById('you-lost-container').classList.remove('d-none');
-        document.getElementById('canvas').classList.add('d-none');
+        document.getElementById('canvas-container').classList.add('d-none');
     }, 500);
 }
 
 // wenn endboss tod wird you-won-container angezeigt
 function gameWon() {
+    stopBackgroundMusic();
+    showGameWinContainer();
+}
+
+// canvas bekommt d-none, win container wird angezeigt
+function showGameWinContainer() {
     setTimeout(() => {
+        gameWinSound.play();
         document.getElementById('you-win-container').classList.remove('d-none');
-        document.getElementById('canvas').classList.add('d-none');
+        document.getElementById('canvas-container').classList.add('d-none');
     }, 1200);
+}
+
+// stopt nach Win oder Lose die Hintergrundmusik
+function stopBackgroundMusic() {
+    gameBackgroundMusic.pause();
+    gameEndbossMusic.pause();
 }
 
 // zeigt den loading Screen an
@@ -37,7 +59,7 @@ function startLoadingScreen() {
 // zeigt Canvas
 function showCanvas() {
     document.getElementById('loading-animation-container').classList.add('d-none');
-    document.getElementById('canvas').classList.remove('d-none');
+    document.getElementById('canvas-container').classList.remove('d-none');
 }
 
 // öffnet den Container wo die Story über Pepe steht

@@ -121,7 +121,13 @@ class Endboss extends MovableObject {
     // lässt Endboss nach links laufen
     walkingAnimation() {
         this.playAnimation(this.IMAGES_WALKING);
+        this.playEndbossMusic();
         this.moveLeft();
         this.otherDirection = false;
+    }
+
+    playEndbossMusic() {
+        gameEndbossMusic.play();
+        gameBackgroundMusic.pause();
     }
 }

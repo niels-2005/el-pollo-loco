@@ -132,6 +132,7 @@ class Character extends MovableObject {
 
     deathAnimation() {
         this.playAnimation(this.IMAGES_DEAD);
+        characterDeadSound.play();
         gameLost();
         setTimeout(() => {
             clearInterval(this.characterInterval);
@@ -140,11 +141,13 @@ class Character extends MovableObject {
 
     hurtAnimation() {
         this.playAnimation(this.IMAGES_HURT);
+        characterHurtSound.play();
         this.checkingLongIdle = 0;
     }
 
     jumpAnimation() {
         this.playAnimation(this.IMAGES_JUMPING);
+        characterJumpSound.play();
         this.checkingLongIdle = 0;
     }
 

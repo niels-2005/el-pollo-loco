@@ -97,6 +97,28 @@
             <button onclick="restartGameWin()">Restart</button>
             <button onclick="goToMainMenuWin()">Main Menu</button>
         </div>
-        <canvas id="canvas" class="d-none" width="820" height="480"></canvas>
+        <div id="canvas-container" class="d-none">
+            <canvas id="canvas" width="820" height="480"></canvas>
+            <div id="controls-ingame">
+                <div class="center-items">
+                    <img src="./img/10_images_extern/arrow-left.png" alt="" />
+                    <span>Left</span>
+                </div>
+                <div class="center-items">
+                    <img src="./img/10_images_extern/arrow-right.png" alt="" />
+                    <span>Right</span>
+                </div>
+                <div class="center-items">
+                    <span>SPACE</span>
+                    <span>Jump</span>
+                </div>
+                <div class="center-items">
+                    <span>D</span>
+                    <span>Throw</span>
+                </div>
+            </div>
+            <img id="sound-on-img" onclick="soundOff()" src="./img/10_images_extern/sound-on.png" alt="" />
+            <img id="sound-off-img" class="d-none" onclick="soundOn()" src="./img/10_images_extern/sound-off.png" />
+        </div>
     </body>
 </html>

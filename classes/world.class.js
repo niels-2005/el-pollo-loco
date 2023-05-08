@@ -57,11 +57,16 @@ class World {
     // killt Chicken wenn draufgesprungen, gibt Character extra jump nach oben
     killChicken(enemy) {
         this.character.speedY = 30;
-        enemy.energy = 0;
+        this.chickenIsDead(enemy);
 
         setTimeout(() => {
             this.deleteEnemy(enemy);
         }, 500);
+    }
+
+    chickenIsDead(enemy) {
+        enemy.energy = 0;
+        ChickenDeadSound.play();
     }
 
     // löscht Enemys wenn Tod aus Array
@@ -143,6 +148,7 @@ class World {
     checkCollisionsBottle() {
         this.level.collectableObjectBottle.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
+                collectBottleSound.play();
                 this.bottleCollected(bottle);
                 this.increaseBottleBar();
             }
@@ -176,6 +182,7 @@ class World {
     // gegner für tod erklären mit bottle
     chickenKilledWithBottle(enemy) {
         enemy.energy = 0;
+        ChickenDeadSound.play();
 
         setTimeout(() => {
             this.deleteEnemy(enemy);
@@ -186,6 +193,7 @@ class World {
     checkCollisionsCoin() {
         this.level.collectableObjectCoin.forEach((coin) => {
             if (this.character.isColliding(coin)) {
+                collectCoinSound.play();
                 this.increaseCoinBar();
                 this.coinCollected(coin);
             }

@@ -13,7 +13,7 @@ class CollectableObjectBottle extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
+        setStoppableInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLE);
         }, 600);
     }

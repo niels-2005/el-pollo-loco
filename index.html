@@ -30,9 +30,11 @@
         <script src="./js/game-sound.js"></script>
     </head>
     <body>
-        <div id="rotate-phone-screen" class="d-none">
-            <p>Please rotate your Phone</p>
+        <div class="rotate-your-device">
+            <div class="phone"></div>
+            <div class="message">Please rotate your device!</div>
         </div>
+
         <div id="start-screen-container">
             <button onclick="startGame()">Start</button>
             <button onclick="openStoryTextContainer()">Story</button>
@@ -59,19 +61,29 @@
             <h3>Game Controls</h3>
             <div class="control-container">
                 <div class="move-left-container">
-                    <div><img src="./img/10_images_extern/arrow-left.png" alt="" /></div>
+                    <div><img class="controls-img-height" src="./img/10_images_extern/arrow-left.png" alt="" /></div>
                     <div class="font-size-40px">Move Left</div>
                 </div>
                 <div class="move-right-container">
-                    <div><img src="./img/10_images_extern/arrow-right.png" alt="" /></div>
+                    <div><img class="controls-img-height" src="./img/10_images_extern/arrow-right.png" alt="" /></div>
                     <div class="font-size-40px">Move Right</div>
                 </div>
                 <div class="space-container">
-                    <div class="font-size-40px">SPACE</div>
+                    <div class="space-container-left">
+                        <img src="./img/10_images_extern/arrow-up.png" alt="" />
+                        <div class="vertikal-line"></div>
+                        <span class="font-size-40px">SPACE </span>
+                    </div>
                     <div class="font-size-40px">Jump</div>
                 </div>
                 <div class="throw-bottle-container">
-                    <div class="font-size-40px">D</div>
+                    <div>
+                        <div class="throw-bottle-container-left">
+                            <img src="./img/10_images_extern/arrow-up-right.png" alt="" />
+                            <div class="vertikal-line"></div>
+                            <span class="font-size-40px">D</span>
+                        </div>
+                    </div>
                     <div class="font-size-40px">Throw Bottle</div>
                 </div>
             </div>
@@ -117,8 +129,36 @@
                     <span>Throw</span>
                 </div>
             </div>
+            <div id="controls-ingame-mobile">
+                <div class="center-items">
+                    <img src="./img/10_images_extern/arrow-left.png" alt="" />
+                    <span>Left</span>
+                </div>
+                <div class="center-items">
+                    <img src="./img/10_images_extern/arrow-right.png" alt="" />
+                    <span>Right</span>
+                </div>
+                <div class="center-items">
+                    <img src="./img/10_images_extern/arrow-up.png" alt="" />
+                    <span>Jump</span>
+                </div>
+                <div class="center-items">
+                    <img src="./img/10_images_extern/arrow-up-right.png" alt="" />
+                    <span>Throw</span>
+                </div>
+            </div>
             <img id="sound-on-img" onclick="soundOff()" src="./img/10_images_extern/sound-on.png" alt="" />
             <img id="sound-off-img" class="d-none" onclick="soundOn()" src="./img/10_images_extern/sound-off.png" />
+            <div id="mobile-btns">
+                <div class="mobile-btns-left">
+                    <img id="btn-left" src="./img/10_images_extern/arrow-left.png" alt="" />
+                    <img id="btn-right" src="./img/10_images_extern/arrow-right.png" alt="" />
+                </div>
+                <div class="mobile-btns-right">
+                    <img id="btn-jump" src="./img/10_images_extern/arrow-up.png" alt="" />
+                    <img id="btn-throw" src="./img/10_images_extern/arrow-up-right.png" alt="" />
+                </div>
+            </div>
         </div>
     </body>
 </html>

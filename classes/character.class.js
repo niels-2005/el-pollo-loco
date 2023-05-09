@@ -6,9 +6,9 @@ class Character extends MovableObject {
     checkingLongIdle = 0;
     offset = {
         top: 120,
-        bottom: -20,
-        left: 10,
-        right: 10,
+        bottom: 10,
+        left: -20,
+        right: -20,
     };
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -95,7 +95,7 @@ class Character extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
+        setStoppableInterval(() => {
             // nach rechts laufen
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
@@ -113,7 +113,7 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         // Animations abspielen in bestimmten Situationen
-        this.characterInterval = setInterval(() => {
+        setStoppableInterval(() => {
             if (this.isDead()) {
                 this.deathAnimation();
             } else if (this.isHurt()) {
@@ -133,42 +133,56 @@ class Character extends MovableObject {
     deathAnimation() {
         this.playAnimation(this.IMAGES_DEAD);
         characterDeadSound.play();
+        setGameSoundsToNull();
         gameLost();
-        setTimeout(() => {
-            clearInterval(this.characterInterval);
-        }, 200);
+        this.stopsGame();
     }
 
+    // stoppt alle Intervalle nach 0.7s
+    stopsGame() {
+        setTimeout(() => {
+            stopGame();
+            arrivedEndboss = false;
+        }, 700);
+    }
+
+    // character is hurt
     hurtAnimation() {
         this.playAnimation(this.IMAGES_HURT);
         characterHurtSound.play();
         this.checkingLongIdle = 0;
     }
 
+    // character springt
     jumpAnimation() {
         this.playAnimation(this.IMAGES_JUMPING);
         characterJumpSound.play();
         this.checkingLongIdle = 0;
     }
 
+    // wenn Character läuft
     isWalking() {
         return this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
     }
 
+    // character läuft
     walkingAnimation() {
         this.playAnimation(this.IMAGES_WALKING);
         this.checkingLongIdle = 0;
     }
 
+    // wenn character steht
     isStanding() {
         return this.checkingLongIdle < 30;
     }
 
+    // character steht
     idleAnimation() {
         this.playAnimation(this.IMAGES_IDLE);
         this.checkingLongIdle++;
     }
 
+    // schlaf animation
     longIdleAnimation() {
         this.playAnimation(this.IMAGES_LONG_IDLE);
     }

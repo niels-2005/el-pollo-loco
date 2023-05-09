@@ -14,7 +14,7 @@ class MovableObject extends DrawableObject {
 
     // Gravitation für die bottle
     applyGravityBottle() {
-        setInterval(() => {
+        setStoppableInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
@@ -24,7 +24,7 @@ class MovableObject extends DrawableObject {
 
     // applyGravity für den character, wenn character unter der y-achse landen will wird er wieder auf 105 gesetzt
     applyGravityCharacter() {
-        setInterval(() => {
+        setStoppableInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
@@ -74,7 +74,7 @@ class MovableObject extends DrawableObject {
 
     // funktion um objekten "Leben" abzuziehen
     hit() {
-        this.energy -= 10;
+        this.energy -= 13;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -108,7 +108,14 @@ class MovableObject extends DrawableObject {
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000; // ms in s
-        return timepassed < 1.2; // 1 = wielange das object verletzt ist
+        return timepassed < 0.5; // 1 = wielange das object verletzt ist
+    }
+
+    // endboss wurde angegriffen
+    endbossIsHurt() {
+        let timepassed = new Date().getTime() - this.lastHit;
+        timepassed = timepassed / 1000; // ms in s
+        return timepassed < 1.3; // 1 = wielange das object verletzt ist
     }
 
     // funktion die Objekte "tod" erklärt, wenn Objekt Energy = 0

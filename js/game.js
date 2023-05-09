@@ -2,6 +2,7 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let arrivedEndboss = false;
+let intervalIDs = [];
 
 function startGame() {
     startLoadingScreen();
@@ -9,9 +10,21 @@ function startGame() {
         showCanvas();
         gameSounds();
         initLevel();
+        mobileButtons();
         canvas = document.getElementById('canvas');
         world = new World(canvas, keyboard);
     }, 1000);
+}
+
+// pusht Intervalle in das Array intervalIDs
+function setStoppableInterval(fn, time) {
+    let id = setInterval(fn, time);
+    intervalIDs.push(id);
+}
+
+// alle Intervalle im Array intervalIDs werden gecleart
+function stopGame() {
+    intervalIDs.forEach(clearInterval);
 }
 
 // wenn character tod wird you-lost-container angezeigt
@@ -38,7 +51,6 @@ function gameWon() {
 // canvas bekommt d-none, win container wird angezeigt
 function showGameWinContainer() {
     setTimeout(() => {
-        gameWinSound.play();
         document.getElementById('you-win-container').classList.remove('d-none');
         document.getElementById('canvas-container').classList.add('d-none');
     }, 1200);
@@ -165,3 +177,50 @@ window.addEventListener('keyup', (e) => {
         keyboard.D = false;
     }
 });
+
+// Mobile Buttons
+function mobileButtons() {
+    document.getElementById('canvas').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+    });
+
+    document.getElementById('btn-left').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = true;
+    });
+
+    document.getElementById('btn-left').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = false;
+    });
+
+    document.getElementById('btn-right').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = true;
+    });
+
+    document.getElementById('btn-right').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = false;
+    });
+
+    document.getElementById('btn-jump').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = true;
+    });
+
+    document.getElementById('btn-jump').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = false;
+    });
+
+    document.getElementById('btn-throw').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.D = true;
+    });
+
+    document.getElementById('btn-throw').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.D = false;
+    });
+}

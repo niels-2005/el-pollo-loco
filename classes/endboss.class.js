@@ -63,16 +63,16 @@ class Endboss extends MovableObject {
     }
 
     endbossAnimations() {
-        setInterval(() => {
+        setStoppableInterval(() => {
             if (this.arrivingEndboss()) {
                 this.endbossAttentionAnimation();
             } else if (this.CharacterIsNearEndboss()) {
                 this.endbossAttackingAnimation();
-            } else if (this.isHurt()) {
+            } else if (this.endbossIsHurt()) {
                 this.endbossIsHurtAnimation();
             } else if (this.isDead()) {
                 this.deathAnimation();
-            } else if (this.endbossIsWalking()) {
+            } else if (this.endbossCanWalk()) {
                 this.walkingAnimation();
             }
         }, 130);
@@ -86,9 +86,14 @@ class Endboss extends MovableObject {
     // arrivedEndboss nach 1s abgebrochen
     endbossAttentionAnimation() {
         this.playAnimation(this.IMAGES_ATTENTION);
+        endbossAttentionSound.play();
+        this.letEndbossWalk();
+    }
+
+    letEndbossWalk() {
         setTimeout(() => {
             arrivedEndboss = true;
-        }, 1000);
+        }, 1500);
     }
 
     CharacterIsNearEndboss() {
@@ -97,24 +102,49 @@ class Endboss extends MovableObject {
 
     endbossAttackingAnimation() {
         this.playAnimation(this.IMAGES_ATTACK);
+        endbossAttackSound.play();
     }
 
     endbossIsHurtAnimation() {
         this.playAnimation(this.IMAGES_HURT);
+        endbossHurtSound.play();
     }
 
     // zeigt die Images Death und nach 0,5s fliegt der Endboss unten aus dem Game
     deathAnimation() {
-        this.playAnimation(this.IMAGES_DEAD);
+        this.endbossDeadAndSound();
+        setGameSoundsToNull();
+        this.endbossMovesDownFromField();
         gameWon();
+        this.stopsGame();
+    }
+
+    stopsGame() {
         setTimeout(() => {
-            setInterval(() => {
+            stopGame();
+            arrivedEndboss = false;
+        }, 1500);
+    }
+
+    // lässt Endboss Dead Animation & Sound abspielen
+    endbossDeadAndSound() {
+        this.playAnimation(this.IMAGES_DEAD);
+        setTimeout(() => {
+            gameWinSound.play();
+        }, 200);
+    }
+
+    // lässt Endboss vom Feld verschwinden
+    endbossMovesDownFromField() {
+        setTimeout(() => {
+            setStoppableInterval(() => {
                 this.y += 20;
             }, 50);
         }, 500);
     }
 
-    endbossIsWalking() {
+    // Endboss läuft
+    endbossCanWalk() {
         return arrivedEndboss === true;
     }
 
@@ -126,7 +156,9 @@ class Endboss extends MovableObject {
         this.otherDirection = false;
     }
 
+    // lässt epische Endboss Music laufen
     playEndbossMusic() {
+        gameEndbossMusic.loop = true;
         gameEndbossMusic.play();
         gameBackgroundMusic.pause();
     }

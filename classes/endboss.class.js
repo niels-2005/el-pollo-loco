@@ -119,6 +119,7 @@ class Endboss extends MovableObject {
         this.stopsGame();
     }
 
+    // stoppt alle Intervalle nach 1,5s
     stopsGame() {
         setTimeout(() => {
             stopGame();

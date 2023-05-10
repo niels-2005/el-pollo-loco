@@ -65,7 +65,6 @@ class World {
 
     // killt Chicken wenn draufgesprungen, gibt Character extra jump nach oben
     killChicken(enemy) {
-        checkKilledChicken();
         this.character.speedY = 30;
         this.chickenIsDead(enemy);
 
@@ -74,6 +73,7 @@ class World {
         }, 500);
     }
 
+    // setzt enemy leben auf null und spielt sound
     chickenIsDead(enemy) {
         enemy.energy = 0;
         ChickenDeadSound.play();
@@ -84,6 +84,7 @@ class World {
         let i = this.level.enemies.indexOf(enemy);
         if (i > -1) {
             this.level.enemies.splice(i, 1);
+            checkKilledChicken();
         }
     }
 

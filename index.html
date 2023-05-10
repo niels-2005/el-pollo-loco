@@ -35,128 +35,137 @@
             <div class="message">Please rotate your device!</div>
         </div>
 
-        <div id="start-screen-container">
-            <button onclick="startGame()">Start</button>
-            <button onclick="openStoryTextContainer()">Story</button>
-            <button onclick="openControlsTextContainer()">Controls</button>
-        </div>
-        <div id="loading-animation-container" class="d-none">
-            <div class="loading-animation"></div>
-        </div>
-        <div id="story-container" class="d-none">
-            <div onclick="closeStoryTextContainer()" class="close-icon-container">
-                <div class="close-icon"></div>
+        <div id="fullscreen">
+            <div id="start-screen-container" class="start-screen-container">
+                <button id="start-game-button" onclick="startGame()">Start</button>
+                <button id="open-story-button" onclick="openStoryTextContainer()">Story</button>
+                <button id="open-controls-button" onclick="openControlsTextContainer()">Controls</button>
+                <img id="enter-fullscreen-img" onclick="goToFullscreen()" src="./img/10_images_extern/fullscreen.png" alt="" />
+                <img
+                    id="disable-fullscreen-img"
+                    class="d-none"
+                    onclick="goOutFromFullscreen()"
+                    src="./img/10_images_extern/exit-fullscreen.png"
+                    alt="" />
             </div>
-            <p>
-                Pepe, a brave Mexican, faces a great challenge as his beloved village is threatened by an army of evil chickens led by El Pollo Loco.
-                To save his village, Pepe embarks on a dangerous adventure through the Mexican desert. With his skilled throwing technique, he hurls
-                salsa bottles at the chickens to defeat them and overcome treacherous obstacles. Along his journey, he ultimately confronts El Pollo
-                Loco in an epic showdown.
-            </p>
-        </div>
-        <div id="controls-container" class="d-none">
-            <div onclick="closeControlsTextContainer()" class="close-icon-container">
-                <div class="close-icon"></div>
+            <div id="loading-animation-container" class="d-none">
+                <div id="loading-animation-id" class="loading-animation"></div>
             </div>
-            <h3>Game Controls</h3>
-            <div class="control-container">
-                <div class="move-left-container">
-                    <div><img class="controls-img-height" src="./img/10_images_extern/arrow-left.png" alt="" /></div>
-                    <div class="font-size-40px">Move Left</div>
+            <div id="story-container" class="d-none">
+                <div onclick="closeStoryTextContainer()" class="close-icon-container">
+                    <div class="close-icon"></div>
                 </div>
-                <div class="move-right-container">
-                    <div><img class="controls-img-height" src="./img/10_images_extern/arrow-right.png" alt="" /></div>
-                    <div class="font-size-40px">Move Right</div>
+                <p>
+                    Pepe, a brave Mexican, faces a great challenge as his beloved village is threatened by an army of evil chickens led by El Pollo
+                    Loco. To save his village, Pepe embarks on a dangerous adventure through the Mexican desert. With his skilled throwing technique,
+                    he hurls salsa bottles at the chickens to defeat them and overcome treacherous obstacles. Along his journey, he ultimately
+                    confronts El Pollo Loco in an epic showdown.
+                </p>
+            </div>
+            <div id="controls-container" class="d-none">
+                <div onclick="closeControlsTextContainer()" class="close-icon-container">
+                    <div class="close-icon"></div>
                 </div>
-                <div class="space-container">
-                    <div class="space-container-left">
-                        <img src="./img/10_images_extern/arrow-up.png" alt="" />
-                        <div class="vertikal-line"></div>
-                        <span class="font-size-40px">SPACE </span>
+                <h3>Game Controls</h3>
+                <div class="control-container">
+                    <div class="move-left-container">
+                        <div><img class="controls-img-height" src="./img/10_images_extern/arrow-left.png" alt="" /></div>
+                        <div class="font-size-40px">Move Left</div>
                     </div>
-                    <div class="font-size-40px">Jump</div>
-                </div>
-                <div class="throw-bottle-container">
-                    <div>
-                        <div class="throw-bottle-container-left">
-                            <img src="./img/10_images_extern/arrow-up-right.png" alt="" />
+                    <div class="move-right-container">
+                        <div><img class="controls-img-height" src="./img/10_images_extern/arrow-right.png" alt="" /></div>
+                        <div class="font-size-40px">Move Right</div>
+                    </div>
+                    <div class="space-container">
+                        <div class="space-container-left">
+                            <img src="./img/10_images_extern/arrow-up.png" alt="" />
                             <div class="vertikal-line"></div>
-                            <span class="font-size-40px">D</span>
+                            <span class="font-size-40px">SPACE </span>
                         </div>
+                        <div class="font-size-40px">Jump</div>
                     </div>
-                    <div class="font-size-40px">Throw Bottle</div>
+                    <div class="throw-bottle-container">
+                        <div>
+                            <div class="throw-bottle-container-left">
+                                <img src="./img/10_images_extern/arrow-up-right.png" alt="" />
+                                <div class="vertikal-line"></div>
+                                <span class="font-size-40px">D</span>
+                            </div>
+                        </div>
+                        <div class="font-size-40px">Throw Bottle</div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="you-lost-container" class="d-none">
-            <button onclick="restartGameLose()">Restart</button>
-            <button onclick="openHintsTextContainer()">Hints</button>
-            <button onclick="goToMainMenuLose()">Main Menu</button>
-        </div>
-        <div id="hints-container" class="d-none">
-            <div onclick="closeHintsTextContainer()" class="close-icon-container">
-                <div class="close-icon"></div>
+            <div id="you-lost-container" class="d-none">
+                <button id="you-lost-button-1" onclick="restartGameLose()">Restart</button>
+                <button id="you-lost-button-2" onclick="openHintsTextContainer()">Hints</button>
+                <button id="you-lost-button-3" onclick="goToMainMenuLose()">Main Menu</button>
             </div>
-            <h3>Hints</h3>
-            <div class="hints-container-span">
-                <span>Salsa bottles should be handled with care.</span>
-                <span>The chickens can be eliminated in two ways.</span>
-                <span>The end boss can only be attacked in one way.</span>
-                <span>The end boss has a hidden ability.</span>
-            </div>
-        </div>
-        <div id="you-win-container" class="d-none">
-            <button onclick="restartGameWin()">Restart</button>
-            <button onclick="goToMainMenuWin()">Main Menu</button>
-        </div>
-        <div id="canvas-container" class="d-none">
-            <canvas id="canvas" width="820" height="480"></canvas>
-            <div id="controls-ingame">
-                <div class="center-items">
-                    <img src="./img/10_images_extern/arrow-left.png" alt="" />
-                    <span>Left</span>
+            <div id="hints-container" class="d-none">
+                <div onclick="closeHintsTextContainer()" class="close-icon-container">
+                    <div class="close-icon"></div>
                 </div>
-                <div class="center-items">
-                    <img src="./img/10_images_extern/arrow-right.png" alt="" />
-                    <span>Right</span>
-                </div>
-                <div class="center-items">
-                    <span>SPACE</span>
-                    <span>Jump</span>
-                </div>
-                <div class="center-items">
-                    <span>D</span>
-                    <span>Throw</span>
+                <h3>Hints</h3>
+                <div class="hints-container-span">
+                    <span>Salsa bottles should be handled with care.</span>
+                    <span>The chickens can be eliminated in two ways.</span>
+                    <span>The end boss can only be attacked in one way.</span>
+                    <span>The end boss has a hidden ability.</span>
                 </div>
             </div>
-            <div id="controls-ingame-mobile">
-                <div class="center-items">
-                    <img src="./img/10_images_extern/arrow-left.png" alt="" />
-                    <span>Left</span>
-                </div>
-                <div class="center-items">
-                    <img src="./img/10_images_extern/arrow-right.png" alt="" />
-                    <span>Right</span>
-                </div>
-                <div class="center-items">
-                    <img src="./img/10_images_extern/arrow-up.png" alt="" />
-                    <span>Jump</span>
-                </div>
-                <div class="center-items">
-                    <img src="./img/10_images_extern/arrow-up-right.png" alt="" />
-                    <span>Throw</span>
-                </div>
+            <div id="you-win-container" class="d-none">
+                <button id="you-win-button-1" onclick="restartGameWin()">Restart</button>
+                <button id="you-win-button-2" onclick="goToMainMenuWin()">Main Menu</button>
             </div>
-            <img id="sound-on-img" onclick="soundOff()" src="./img/10_images_extern/sound-on.png" alt="" />
-            <img id="sound-off-img" class="d-none" onclick="soundOn()" src="./img/10_images_extern/sound-off.png" />
-            <div id="mobile-btns">
-                <div class="mobile-btns-left">
-                    <img id="btn-left" src="./img/10_images_extern/arrow-left.png" alt="" />
-                    <img id="btn-right" src="./img/10_images_extern/arrow-right.png" alt="" />
+            <div id="canvas-container" class="d-none">
+                <canvas id="canvas" width="820" height="480"></canvas>
+                <div id="controls-ingame">
+                    <div class="center-items">
+                        <img src="./img/10_images_extern/arrow-left.png" alt="" />
+                        <span>Left</span>
+                    </div>
+                    <div class="center-items">
+                        <img src="./img/10_images_extern/arrow-right.png" alt="" />
+                        <span>Right</span>
+                    </div>
+                    <div class="center-items">
+                        <span>SPACE</span>
+                        <span>Jump</span>
+                    </div>
+                    <div class="center-items">
+                        <span>D</span>
+                        <span>Throw</span>
+                    </div>
                 </div>
-                <div class="mobile-btns-right">
-                    <img id="btn-jump" src="./img/10_images_extern/arrow-up.png" alt="" />
-                    <img id="btn-throw" src="./img/10_images_extern/arrow-up-right.png" alt="" />
+                <div id="controls-ingame-mobile">
+                    <div class="center-items">
+                        <img src="./img/10_images_extern/arrow-left.png" alt="" />
+                        <span>Left</span>
+                    </div>
+                    <div class="center-items">
+                        <img src="./img/10_images_extern/arrow-right.png" alt="" />
+                        <span>Right</span>
+                    </div>
+                    <div class="center-items">
+                        <img src="./img/10_images_extern/arrow-up.png" alt="" />
+                        <span>Jump</span>
+                    </div>
+                    <div class="center-items">
+                        <img src="./img/10_images_extern/arrow-up-right.png" alt="" />
+                        <span>Throw</span>
+                    </div>
+                </div>
+                <img id="sound-on-img" onclick="soundOff()" src="./img/10_images_extern/sound-on.png" alt="" />
+                <img id="sound-off-img" class="d-none" onclick="soundOn()" src="./img/10_images_extern/sound-off.png" />
+                <div id="mobile-btns">
+                    <div class="mobile-btns-left">
+                        <img id="btn-left" src="./img/10_images_extern/arrow-left.png" alt="" />
+                        <img id="btn-right" src="./img/10_images_extern/arrow-right.png" alt="" />
+                    </div>
+                    <div class="mobile-btns-right">
+                        <img id="btn-jump" src="./img/10_images_extern/arrow-up.png" alt="" />
+                        <img id="btn-throw" src="./img/10_images_extern/arrow-up-right.png" alt="" />
+                    </div>
                 </div>
             </div>
         </div>

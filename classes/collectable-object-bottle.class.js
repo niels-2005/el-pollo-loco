@@ -8,7 +8,7 @@ class CollectableObjectBottle extends MovableObject {
     constructor() {
         super().loadImage('img/8_coin/coin_1.png');
         this.loadImages(this.IMAGES_BOTTLE);
-        this.x = 400 + Math.random() * 2000;
+        this.x = 200 + Math.random() * 2000;
         this.animate();
     }
 

@@ -224,3 +224,86 @@ function mobileButtons() {
         keyboard.D = false;
     });
 }
+
+// Fullscreen
+function goToFullscreen() {
+    addClassesToAllElements();
+    let fullscreen = document.getElementById('fullscreen');
+    enterFullscreen(fullscreen);
+}
+
+// fügt allen Elementen die Fullscreen Klasse hinzu, Fullscreen Icon wird geswitcht
+function addClassesToAllElements() {
+    document.getElementById('start-screen-container').classList.add('fullscreen');
+    document.getElementById('loading-animation-container').classList.add('fullscreen');
+    document.getElementById('story-container').classList.add('fullscreen');
+    document.getElementById('controls-container').classList.add('fullscreen');
+    document.getElementById('you-lost-container').classList.add('fullscreen');
+    document.getElementById('hints-container').classList.add('fullscreen');
+    document.getElementById('you-win-container').classList.add('fullscreen');
+    document.getElementById('canvas-container').classList.add('fullscreen');
+    document.getElementById('canvas').classList.add('fullscreen');
+    document.getElementById('enter-fullscreen-img').classList.add('d-none');
+    document.getElementById('disable-fullscreen-img').classList.remove('d-none');
+    document.getElementById('loading-animation-id').classList.add('loading-animation-fullscreen');
+    document.getElementById('loading-animation-id').classList.remove('loading-animation');
+    document.getElementById('you-lost-button-1').classList.add('button-style-fullscreen');
+    document.getElementById('you-lost-button-2').classList.add('button-style-fullscreen');
+    document.getElementById('you-lost-button-3').classList.add('button-style-fullscreen');
+    document.getElementById('you-win-button-1').classList.add('button-style-fullscreen');
+    document.getElementById('you-win-button-2').classList.add('button-style-fullscreen');
+    document.getElementById('start-game-button').classList.add('button-style-fullscreen-main-menu');
+    document.getElementById('open-story-button').classList.add('button-style-fullscreen-main-menu');
+    document.getElementById('open-controls-button').classList.add('button-style-fullscreen-main-menu');
+}
+
+// in den Fullscreen hinein
+function enterFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+    }
+}
+
+// aus den Fullscreen heraus
+function goOutFromFullscreen() {
+    removeClassesFromAllElements();
+    exitFullscreen();
+}
+
+// switch to normal Mode
+function removeClassesFromAllElements() {
+    document.getElementById('start-screen-container').classList.remove('fullscreen');
+    document.getElementById('loading-animation-container').classList.remove('fullscreen');
+    document.getElementById('story-container').classList.remove('fullscreen');
+    document.getElementById('controls-container').classList.remove('fullscreen');
+    document.getElementById('you-lost-container').classList.remove('fullscreen');
+    document.getElementById('hints-container').classList.remove('fullscreen');
+    document.getElementById('you-win-container').classList.remove('fullscreen');
+    document.getElementById('canvas-container').classList.remove('fullscreen');
+    document.getElementById('canvas').classList.remove('fullscreen');
+    document.getElementById('enter-fullscreen-img').classList.remove('d-none');
+    document.getElementById('disable-fullscreen-img').classList.add('d-none');
+    document.getElementById('loading-animation-id').classList.remove('loading-animation-fullscreen');
+    document.getElementById('loading-animation-id').classList.add('loading-animation');
+    document.getElementById('you-lost-button-1').classList.remove('button-style-fullscreen');
+    document.getElementById('you-lost-button-2').classList.remove('button-style-fullscreen');
+    document.getElementById('you-lost-button-3').classList.remove('button-style-fullscreen');
+    document.getElementById('you-win-button-1').classList.remove('button-style-fullscreen');
+    document.getElementById('you-win-button-2').classList.remove('button-style-fullscreen');
+    document.getElementById('start-game-button').classList.remove('button-style-fullscreen-main-menu');
+    document.getElementById('open-story-button').classList.remove('button-style-fullscreen-main-menu');
+    document.getElementById('open-controls-button').classList.remove('button-style-fullscreen-main-menu');
+}
+
+// exit fullscreen
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    }
+}

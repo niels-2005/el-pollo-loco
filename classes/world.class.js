@@ -46,7 +46,7 @@ class World {
     runBottles() {
         setStoppableInterval(() => {
             this.checkThrowObjects();
-        }, 100);
+        }, 150);
     }
 
     // Kolisionen Checken (Character & Gegner)

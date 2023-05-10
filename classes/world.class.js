@@ -22,6 +22,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.runBottles();
     }
 
     // Verknüpfung Character & Welt
@@ -29,22 +30,30 @@ class World {
         this.character.world = this;
     }
 
+    // setzt Intervalle die Collisionen checken
     run() {
         setStoppableInterval(() => {
             this.checkCollisionsWithChicken();
             this.checkCollisionsWithEndboss();
             this.checkCollisionsBottle();
             this.checkCollisionsCoin();
-            this.checkThrowObjects();
             this.killChickenWithBottle();
             this.attackEndboss();
-        }, 200);
+        }, 1000 / 60);
     }
+
+    // setzt ein interval um die bottles werfen zu können
+    runBottles() {
+        setStoppableInterval(() => {
+            this.checkThrowObjects();
+        }, 100);
+    }
+
     // Kolisionen Checken (Character & Gegner)
     checkCollisionsWithChicken() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && !this.character.isHurt()) {
-                if (this.character.isAboveGround()) {
+            if (this.character.isColliding(enemy)) {
+                if (this.character.isAboveGround() && !this.character.isHurt()) {
                     this.killChicken(enemy);
                 } else {
                     this.character.hit();
@@ -56,6 +65,7 @@ class World {
 
     // killt Chicken wenn draufgesprungen, gibt Character extra jump nach oben
     killChicken(enemy) {
+        checkKilledChicken();
         this.character.speedY = 30;
         this.chickenIsDead(enemy);
 
@@ -139,6 +149,7 @@ class World {
 
     // definiert eine bottle und pusht sie in ein array, wodurch bottles geworfen werden können
     throwBottle() {
+        checkThrowedBottles();
         this.collectedBottles--;
         let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.character.otherDirection);
         this.throwableObject.push(bottle);
@@ -157,6 +168,7 @@ class World {
 
     // wenn Bottle eingesammelt wird, wird es aus dem Array (aus der Map) gelöscht
     bottleCollected(bottle) {
+        checkCollectedBottles();
         this.collectedBottles++;
         let i = this.level.collectableObjectBottle.indexOf(bottle);
         this.level.collectableObjectBottle.splice(i, 1);
@@ -208,6 +220,7 @@ class World {
 
     // wenn coin eingesammelt wird, wird es aus dem Array (aus der Map) gelöscht
     coinCollected(coin) {
+        checkCollectedCoins();
         let i = this.level.collectableObjectCoin.indexOf(coin);
         this.level.collectableObjectCoin.splice(i, 1);
     }

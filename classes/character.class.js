@@ -1,12 +1,10 @@
 class Character extends MovableObject {
     height = 330;
     width = 120;
-    y = 105;
-    x = 60;
     checkingLongIdle = 0;
     offset = {
         top: 120,
-        bottom: -10,
+        bottom: 20,
         left: 15,
         right: 15,
     };

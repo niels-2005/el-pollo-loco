@@ -322,18 +322,48 @@ canvas {
         height: 480px;
         background-color: orange;
         display: flex;
-        justify-content: center;
-        gap: 50px;
+        flex-direction: column;
         position: relative;
         background-image: url('img/9_intro_outro_screens/game_over/oh\ no\ you\ lost!.png');
         background-position: center;
         background-size: contain;
     }
 
+    .collected-items-bottles-container{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .collected-items-container{
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-around;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .collected-items-container span {
+        font-size: 28px;
+        letter-spacing: 1px;
+    }
+
+    .collected-item-flexbox {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .you-lost-button-container{
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
     #you-lost-container button{
      font-family: 'zabras', Arial, Helvetica, sans-serif;
     letter-spacing: 1px;
-    margin-top: 400px;
+    margin-top: 300px;
     height: 50px;
     width: 150px;
     border-style: unset;
@@ -351,7 +381,7 @@ canvas {
     }
 
     #hints-container{
-        width: 820px;
+    width: 820px;
     height: 480px;
     background-color: orange;
     display: flex;
@@ -374,6 +404,7 @@ canvas {
         gap: 50px;
         font-size: 32px;
         letter-spacing: 2px;
+        text-align: center;
     }
 
     #you-win-container{
@@ -381,8 +412,7 @@ canvas {
         height: 480px;
         background-color: orange;
         display: flex;
-        justify-content: center;
-        gap: 50px;
+       flex-direction: column;
         position: relative;
         background-image: url('img/9_intro_outro_screens/game_over/game\ over!.png');
         background-position: center;
@@ -392,7 +422,7 @@ canvas {
     #you-win-container button{
         font-family: 'zabras', Arial, Helvetica, sans-serif;
         letter-spacing: 1px;
-        margin-top: 400px;
+        margin-top: 300px;
         height: 50px;
         width: 150px;
         border-style: unset;
@@ -504,12 +534,11 @@ canvas {
         width: 100%;
     }
 
-    #start-screen-container{
-        height: 100vh;
-        width: 100vw;
-    }
+}
 
-    #controls-ingame{
+@media only screen and (max-width: 900px){
+
+     #controls-ingame{
         display: none;
     }
 
@@ -520,10 +549,6 @@ canvas {
     #mobile-btns{
         display: block;
     }
-
-}
-
-@media only screen and (max-width: 900px){
 
     #enter-fullscreen-img{
         display: none;
@@ -560,7 +585,7 @@ canvas {
    }
 
    #you-lost-container button {
-    margin-top: 325px;
+    margin-top: 225px;
    }
 
    #hints-container{
@@ -584,11 +609,12 @@ canvas {
    }
 
    #you-win-container button {
-    margin-top: 325px;
+    margin-top: 225px;
    }
 
    #canvas{
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
    }
 
    #canvas-container{
@@ -624,11 +650,11 @@ canvas {
        }
 
 #you-lost-container button {
-        margin-top: 290px;
+        margin-top: 190px;
        }
 
  #you-win-container button {
-        margin-top: 290px;
+        margin-top: 190px;
        }
 
 .loading-animation{

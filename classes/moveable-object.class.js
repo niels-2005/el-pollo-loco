@@ -74,7 +74,7 @@ class MovableObject extends DrawableObject {
 
     // funktion um objekten "Leben" abzuziehen
     hit() {
-        this.energy -= 13;
+        this.energy -= 0.5;
         if (this.energy < 0) {
             this.energy = 0;
         } else {

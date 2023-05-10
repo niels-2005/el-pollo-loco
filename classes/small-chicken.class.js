@@ -1,7 +1,14 @@
 class ChickenSmall extends MovableObject {
-    height = 60;
+    height = 55;
     width = 50;
-    y = 365;
+    y = 372;
+
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 25,
+        right: 25,
+    };
 
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
@@ -18,7 +25,7 @@ class ChickenSmall extends MovableObject {
 
         this.x = 500 + Math.random() * 2000; // Zahl der X Achse zwischen 350 & 650 ( Chickenplatzierung )
 
-        this.speed = 0.15 + Math.random() * 0.2; // Geschwindkeit der Chicken unterschiedlich machen
+        this.speed = 0.15 + Math.random() * 0.3; // Geschwindkeit der Chicken unterschiedlich machen
         this.chickenAnimations();
     }
 }

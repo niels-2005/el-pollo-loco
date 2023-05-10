@@ -4,16 +4,50 @@ let keyboard = new Keyboard();
 let arrivedEndboss = false;
 let intervalIDs = [];
 
+let bottlesCollectedInMenu = 0;
+let bottlesThrowedInMenu = 0;
+let coinsCollectedInMenu = 0;
+let killedChickenInMenu = 0;
+
 function startGame() {
     startLoadingScreen();
     setTimeout(() => {
         showCanvas();
+        setEndgameStatisticToNull();
         gameSounds();
         initLevel();
         mobileButtons();
         canvas = document.getElementById('canvas');
         world = new World(canvas, keyboard);
     }, 1000);
+}
+
+// setzt die Statistic wieder auf Null damit es nicht vermehrt wird
+function setEndgameStatisticToNull() {
+    bottlesCollectedInMenu = 0;
+    bottlesThrowedInMenu = 0;
+    coinsCollectedInMenu = 0;
+    killedChickenInMenu = 0;
+}
+
+// checkt die eingesammelten bottles im Spiel
+function checkCollectedBottles() {
+    bottlesCollectedInMenu++;
+}
+
+// checkt die geworfenen Bottle im Spiel
+function checkThrowedBottles() {
+    bottlesThrowedInMenu++;
+}
+
+// checkt die eingesammelten Coins im Spiel
+function checkCollectedCoins() {
+    coinsCollectedInMenu++;
+}
+
+// checkt die getöteten Chicken
+function checkKilledChicken() {
+    killedChickenInMenu++;
 }
 
 // pusht Intervalle in das Array intervalIDs
@@ -37,9 +71,18 @@ function gameLost() {
 function showGameLostContainer() {
     setTimeout(() => {
         gameLoseSound.play();
+        showsGameLoseStatistic();
         document.getElementById('you-lost-container').classList.remove('d-none');
         document.getElementById('canvas-container').classList.add('d-none');
     }, 500);
+}
+
+// bestimmte HTML Elemente bekommen eine kleine Statistic am Ende des Spiels
+function showsGameLoseStatistic() {
+    document.getElementById('collected-bottles-ingame').innerHTML = bottlesCollectedInMenu;
+    document.getElementById('throwed-bottles-ingame').innerHTML = bottlesThrowedInMenu;
+    document.getElementById('collected-coins-ingame').innerHTML = coinsCollectedInMenu;
+    document.getElementById('killed-chicken-ingame').innerHTML = killedChickenInMenu;
 }
 
 // wenn endboss tod wird you-won-container angezeigt
@@ -51,9 +94,18 @@ function gameWon() {
 // canvas bekommt d-none, win container wird angezeigt
 function showGameWinContainer() {
     setTimeout(() => {
+        showsGameWinStatistic();
         document.getElementById('you-win-container').classList.remove('d-none');
         document.getElementById('canvas-container').classList.add('d-none');
     }, 1200);
+}
+
+// zeigt am Ende beim Win eine kleine Statistik
+function showsGameWinStatistic() {
+    document.getElementById('collected-bottles-ingame-win').innerHTML = bottlesCollectedInMenu;
+    document.getElementById('throwed-bottles-ingame-win').innerHTML = bottlesThrowedInMenu;
+    document.getElementById('collected-coins-ingame-win').innerHTML = coinsCollectedInMenu;
+    document.getElementById('killed-chicken-ingame-win').innerHTML = killedChickenInMenu;
 }
 
 // stopt nach Win oder Lose die Hintergrundmusik

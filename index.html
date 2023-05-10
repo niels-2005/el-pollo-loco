@@ -97,9 +97,31 @@
                 </div>
             </div>
             <div id="you-lost-container" class="d-none">
-                <button id="you-lost-button-1" onclick="restartGameLose()">Restart</button>
-                <button id="you-lost-button-2" onclick="openHintsTextContainer()">Hints</button>
-                <button id="you-lost-button-3" onclick="goToMainMenuLose()">Main Menu</button>
+                <div class="collected-items-container">
+                    <div class="collected-items-bottles-container">
+                        <div class="collected-item-flexbox">
+                            <span>Collected Bottles:</span>
+                            <span id="collected-bottles-ingame"></span>
+                        </div>
+                        <div class="collected-item-flexbox">
+                            <span>Throwed Bottles:</span>
+                            <span id="throwed-bottles-ingame"></span>
+                        </div>
+                    </div>
+                    <div class="collected-item-flexbox">
+                        <span>Collected Coins:</span>
+                        <span id="collected-coins-ingame"></span>
+                    </div>
+                    <div class="collected-item-flexbox">
+                        <span>Killed Chicken:</span>
+                        <span id="killed-chicken-ingame"></span>
+                    </div>
+                </div>
+                <div class="you-lost-button-container">
+                    <button id="you-lost-button-1" onclick="restartGameLose()">Restart</button>
+                    <button id="you-lost-button-2" onclick="openHintsTextContainer()">Hints</button>
+                    <button id="you-lost-button-3" onclick="goToMainMenuLose()">Main Menu</button>
+                </div>
             </div>
             <div id="hints-container" class="d-none">
                 <div onclick="closeHintsTextContainer()" class="close-icon-container">
@@ -114,8 +136,30 @@
                 </div>
             </div>
             <div id="you-win-container" class="d-none">
-                <button id="you-win-button-1" onclick="restartGameWin()">Restart</button>
-                <button id="you-win-button-2" onclick="goToMainMenuWin()">Main Menu</button>
+                <div class="collected-items-container">
+                    <div class="collected-items-bottles-container">
+                        <div class="collected-item-flexbox">
+                            <span>Collected Bottles:</span>
+                            <span id="collected-bottles-ingame-win"></span>
+                        </div>
+                        <div class="collected-item-flexbox">
+                            <span>Throwed Bottles:</span>
+                            <span id="throwed-bottles-ingame-win"></span>
+                        </div>
+                    </div>
+                    <div class="collected-item-flexbox">
+                        <span>Collected Coins:</span>
+                        <span id="collected-coins-ingame-win"></span>
+                    </div>
+                    <div class="collected-item-flexbox">
+                        <span>Killed Chicken:</span>
+                        <span id="killed-chicken-ingame-win"></span>
+                    </div>
+                </div>
+                <div class="you-lost-button-container">
+                    <button id="you-win-button-1" onclick="restartGameWin()">Restart</button>
+                    <button id="you-win-button-2" onclick="goToMainMenuWin()">Main Menu</button>
+                </div>
             </div>
             <div id="canvas-container" class="d-none">
                 <canvas id="canvas" width="820" height="480"></canvas>

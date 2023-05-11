@@ -1,5 +1,8 @@
+// The level1.js file defines all the objects that will be visible in the game world at the end.
 let level1;
 
+// The function initLevel() is connected to the level.class.js file.
+// This function creates 12 chickens, 1 end boss, background objects, 5 coins and 8 bottles to collect.
 function initLevel() {
     level1 = new Level(
         [

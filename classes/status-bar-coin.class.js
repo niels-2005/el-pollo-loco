@@ -14,6 +14,8 @@ class StatusBarCoin extends DrawableObject {
     width = 250;
     collected = 0;
 
+    // The constructor of the StatusBarCoin class loads the images for the Statusbar object using the loadImages method and the IMAGES_COIN array.
+    // It sets the initial collected count to 0 using the setCollected method.
     constructor() {
         super();
 
@@ -22,14 +24,23 @@ class StatusBarCoin extends DrawableObject {
         this.setCollected(0);
     }
 
-    //bottle Statusbar setCollected(1), 1 von 5
+    // The setCollected method sets the collected property of the statusbar object to the specified collected value.
+    // It then determines the image path for the current collected state using the resolveImageIndexCoin method and the IMAGES_COIN array.
+    //  Finally, it updates the img property of the statusbar object with the corresponding image from the image cache.
     setCollected(collected) {
         this.collected = collected;
         let path = this.IMAGES_COIN[this.resolveImageIndexCoin()];
         this.img = this.imageCache[path];
     }
 
-    // ermittelt welches bottlestatusbar Image angezeigt werden soll
+    // The resolveImageIndexCoin method returns the index of the image in the IMAGES_COIN array based on the current value of the collected property.
+    // If coins collected is 0, it returns 0.
+    // If coins collected is 1, it returns 1.
+    // If coins collected is 2, it returns 2.
+    // If coins collected is 3, it returns 3.
+    // If coins collected is 4, it returns 4.
+    // For any other value of collected, it returns 5.
+    // This method is used in conjunction with the setCollected method to determine the appropriate image path for the statusbar object based on its collected state.
     resolveImageIndexCoin() {
         if (this.collected == 0) {
             return 0;

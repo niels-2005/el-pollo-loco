@@ -18,7 +18,8 @@ gameLoseSound = new Audio('audio/lose-sound.wav');
 
 let game_music_off = false;
 
-// lässt Hintergrundmusik spielen
+// This function, in case of a direct restart, resets the background music to 0 seconds.
+// It checks if the music is muted or not, and plays the background music (if it is not muted).
 function gameSounds() {
     setSoundsAtBegin();
     checkGameMusic();
@@ -26,26 +27,35 @@ function gameSounds() {
     gameBackgroundMusic.play();
 }
 
-// setzt die Hintergrund zu Beginn jedes Games auf 0 Sekunden
+// resets the background music to 0 seconds.
 function setSoundsAtBegin() {
     gameBackgroundMusic.currentTime = 0;
     gameEndbossMusic.currentTime = 0;
 }
 
-// musik aus
+// This function checks a global variable to determine whether the music is muted or unmuted.
+function checkGameMusic() {
+    if (!game_music_off) {
+        allSoundsVolumeOne();
+    } else {
+        allSoundsVolumeNull();
+    }
+}
+
+// This function sets the global variable game_music_off to true, displays the sound off button, and sets the volume of all sounds to 0.
 function soundOff() {
     game_music_off = true;
     showSoundOffButton();
     allSoundsVolumeNull();
 }
 
-// zeigt den Musik ist aus button auf dem canvas
+// The sound on button disappears, and the sound off button is displayed.
 function showSoundOffButton() {
     document.getElementById('sound-on-img').classList.add('d-none');
     document.getElementById('sound-off-img').classList.remove('d-none');
 }
 
-// setzt alle sounds auf volume 0
+// sets the volume of all sounds to 0.
 function allSoundsVolumeNull() {
     characterJumpSound.volume = 0;
     characterDeadSound.volume = 0;
@@ -64,20 +74,20 @@ function allSoundsVolumeNull() {
     gameLoseSound.volume = 0;
 }
 
-// musik an
+// This function sets the global variable game_music_off to false, displays the sound on button, and sets the volume of all sounds to 1.
 function soundOn() {
     game_music_off = false;
     showSoundOnButton();
     allSoundsVolumeOne();
 }
 
-// zeigt musik an button
+// The sound off button disappears, and the sound on button is displayed.
 function showSoundOnButton() {
     document.getElementById('sound-on-img').classList.remove('d-none');
     document.getElementById('sound-off-img').classList.add('d-none');
 }
 
-// setzt die musik auf volume 1
+// sets the volume of all sounds to 1.
 function allSoundsVolumeOne() {
     characterJumpSound.volume = 1;
     characterDeadSound.volume = 1;
@@ -96,7 +106,8 @@ function allSoundsVolumeOne() {
     gameLoseSound.volume = 1;
 }
 
-// setzt alle Sounds auf 0 wenn Character oder Endboss Tod ist, außer der Win/Lose Sound
+// There is a setTimeout defined that executes after 500ms.
+// If the character or the end boss has 0 energy, all game sounds are set to 0, except for the win or lose sound.
 function setGameSoundsToNull() {
     setTimeout(() => {
         characterJumpSound.volume = 0;
@@ -113,13 +124,4 @@ function setGameSoundsToNull() {
         gameBackgroundMusic.volume = 0;
         gameEndbossMusic.volume = 0;
     }, 500);
-}
-
-// checkt ob die Game Music aus oder an ist (wenn aus, bleibt sie auch aus und umgekehrt)
-function checkGameMusic() {
-    if (!game_music_off) {
-        allSoundsVolumeOne();
-    } else {
-        allSoundsVolumeNull();
-    }
 }

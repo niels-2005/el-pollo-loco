@@ -14,6 +14,7 @@ class StatusBarHealth extends DrawableObject {
     height = 60;
     width = 250;
 
+    // In the constructor, the IMAGES_HEALTH are loaded using the loadImages method, and the percentage is set to 100 using the setPercentage method.
     constructor() {
         super();
         this.loadImages(this.IMAGES_HEALTH);
@@ -21,14 +22,22 @@ class StatusBarHealth extends DrawableObject {
         this.setPercentage(100);
     }
 
-    //Health Statusbar setPercentage(50), von 100 auf 50
+    //The setPercentage method sets the percent property of the statusBar to the specified value.
+    // It then determines the image path based on the resolved image index using the resolveImageIndex() method.
+    // Finally, it updates the img property with the corresponding image from the imageCache.
     setPercentage(percent) {
         this.percent = percent;
         let path = this.IMAGES_HEALTH[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
-    // ermittelt welches Healthstatusbar Image angezeigt werden soll
+    // The resolveImageIndex method determines the image index based on the percent property of the statusBar.
+    //  If the percent is 100, it returns 5.
+    //  If the percent is greater than 80, it returns 4.
+    //  If the percent is greater than 60, it returns 3.
+    //  If the percent is greater than 40, it returns 2.
+    // If the percent is greater than 20, it returns 1.
+    //  If the percent is 20 or less, it returns 0.
     resolveImageIndex() {
         if (this.percent == 100) {
             return 5;

@@ -9,6 +9,8 @@ let bottlesThrowedInMenu = 0;
 let coinsCollectedInMenu = 0;
 let killedChickenInMenu = 0;
 
+// The function startGame() displays a loading screen for one second.
+// After that, it draws the game world, resets the statistics to zero, sets the game sounds to the beginning state, and displays mobile buttons if necessary.
 function startGame() {
     startLoadingScreen();
     setTimeout(() => {
@@ -22,7 +24,30 @@ function startGame() {
     }, 1000);
 }
 
-// setzt die Statistic wieder auf Null damit es nicht vermehrt wird
+// This function pushes most of the game's intervals into an array called "intervallIDs".
+function setStoppableInterval(fn, time) {
+    let id = setInterval(fn, time);
+    intervalIDs.push(id);
+}
+
+// When the game is stopped, the intervals in the "intervallIDS" Array are also cleared.
+function stopGame() {
+    intervalIDs.forEach(clearInterval);
+}
+
+// This function displays the loading screen.
+function startLoadingScreen() {
+    document.getElementById('start-screen-container').classList.add('d-none');
+    document.getElementById('loading-animation-container').classList.remove('d-none');
+}
+
+// This function displays the canvas.
+function showCanvas() {
+    document.getElementById('loading-animation-container').classList.add('d-none');
+    document.getElementById('canvas-container').classList.remove('d-none');
+}
+
+// This function resets the statistics to zero.
 function setEndgameStatisticToNull() {
     bottlesCollectedInMenu = 0;
     bottlesThrowedInMenu = 0;
@@ -30,44 +55,40 @@ function setEndgameStatisticToNull() {
     killedChickenInMenu = 0;
 }
 
-// checkt die eingesammelten bottles im Spiel
+// This function controls the collected bottles in the game to display a small statistic at the end.
 function checkCollectedBottles() {
     bottlesCollectedInMenu++;
 }
 
-// checkt die geworfenen Bottle im Spiel
+// This function controls the throwed bottles in the game to display a small statistic at the end.
 function checkThrowedBottles() {
     bottlesThrowedInMenu++;
 }
 
-// checkt die eingesammelten Coins im Spiel
+//  This function controls the collected Coins in the game to display a small statistic at the end.
 function checkCollectedCoins() {
     coinsCollectedInMenu++;
 }
 
-// checkt die getöteten Chicken
+// This function controls the killed Chicken in the game to display a small statistic at the end.
 function checkKilledChicken() {
     killedChickenInMenu++;
 }
 
-// pusht Intervalle in das Array intervalIDs
-function setStoppableInterval(fn, time) {
-    let id = setInterval(fn, time);
-    intervalIDs.push(id);
-}
-
-// alle Intervalle im Array intervalIDs werden gecleart
-function stopGame() {
-    intervalIDs.forEach(clearInterval);
-}
-
-// wenn character tod wird you-lost-container angezeigt
+// This function is executed when the character has no more energy.
 function gameLost() {
     stopBackgroundMusic();
     showGameLostContainer();
 }
 
-// canvas bekommt d-none, lost container wird angezeigt
+// The background music is paused after Win / Lose
+function stopBackgroundMusic() {
+    gameBackgroundMusic.pause();
+    gameEndbossMusic.pause();
+}
+
+// This function has a setTimeout that is executed after 500ms.
+//  It plays a game lose sound, displays statistics, sets the canvas display to "none", and displays the "You Lost Container".
 function showGameLostContainer() {
     setTimeout(() => {
         gameLoseSound.play();
@@ -77,7 +98,7 @@ function showGameLostContainer() {
     }, 500);
 }
 
-// bestimmte HTML Elemente bekommen eine kleine Statistic am Ende des Spiels
+// In the "You Lost Container", it displays the number of collected bottles, the number of bottles thrown, the number of collected coins, and the number of chickens killed.
 function showsGameLoseStatistic() {
     document.getElementById('collected-bottles-ingame').innerHTML = bottlesCollectedInMenu;
     document.getElementById('throwed-bottles-ingame').innerHTML = bottlesThrowedInMenu;
@@ -85,13 +106,14 @@ function showsGameLoseStatistic() {
     document.getElementById('killed-chicken-ingame').innerHTML = killedChickenInMenu;
 }
 
-// wenn endboss tod wird you-won-container angezeigt
+// This function is executed when the Endboss has no more energy.
 function gameWon() {
     stopBackgroundMusic();
     showGameWinContainer();
 }
 
-// canvas bekommt d-none, win container wird angezeigt
+// This function has a setTimeout that is executed after 1200ms.
+//  It displays statistics, sets the canvas display to "none", and displays the "You Win Container".
 function showGameWinContainer() {
     setTimeout(() => {
         showsGameWinStatistic();
@@ -100,7 +122,7 @@ function showGameWinContainer() {
     }, 1200);
 }
 
-// zeigt am Ende beim Win eine kleine Statistik
+// In the "You Win Container", it displays the number of collected bottles, the number of bottles thrown, the number of collected coins, and the number of chickens killed.
 function showsGameWinStatistic() {
     document.getElementById('collected-bottles-ingame-win').innerHTML = bottlesCollectedInMenu;
     document.getElementById('throwed-bottles-ingame-win').innerHTML = bottlesThrowedInMenu;
@@ -108,49 +130,33 @@ function showsGameWinStatistic() {
     document.getElementById('killed-chicken-ingame-win').innerHTML = killedChickenInMenu;
 }
 
-// stopt nach Win oder Lose die Hintergrundmusik
-function stopBackgroundMusic() {
-    gameBackgroundMusic.pause();
-    gameEndbossMusic.pause();
-}
-
-// zeigt Canvas
-function showCanvas() {
-    document.getElementById('loading-animation-container').classList.add('d-none');
-    document.getElementById('canvas-container').classList.remove('d-none');
-}
-
-// zeigt den loading Screen an
-function startLoadingScreen() {
-    document.getElementById('start-screen-container').classList.add('d-none');
-    document.getElementById('loading-animation-container').classList.remove('d-none');
-}
-
-// öffnet alle Textcontainer über Funktionsparameter definiert in der index.html
+// This function opens all text containers specified by the parameters id1 and id2, which are defined in the index.html file.
 function openTextContainer(id1, id2) {
     document.getElementById(id1).classList.remove('d-none');
     document.getElementById(id2).classList.add('d-none');
 }
 
-// schließt alle Textcontainer über Funktionsparameter definiert in der index.html
+// This function closes all text containers specified by the parameters id1 and id2, which are defined in the index.html file.
 function closeTextContainer(id1, id2) {
     document.getElementById(id1).classList.add('d-none');
     document.getElementById(id2).classList.remove('d-none');
 }
 
-// zum hauptmenü gehen, Funktionsparameter definiert in der index.html
+// This function returns to the main menu upon a win or loss. The parameters are defined in the index.html file.
 function goToMainMenu(id1, id2) {
     document.getElementById(id1).classList.add('d-none');
     document.getElementById(id2).classList.remove('d-none');
 }
 
-// spiel neustarten
+// This functions restarts the Game upon a win or loss. The parameters is defined in the index.html file.
+// The startGame() function initializes a new game.
 function restartGame(id) {
     document.getElementById(id).classList.add('d-none');
     startGame();
 }
 
-// wenn eine Pfeiltaste gedrückt wird (keydown), wird die Variable die in der class Keyboard definiert ist true
+// Event listener for keyboard inputs and updating the keyboard object accordingly
+// This code listens for keydown events and updates the keyboard object based on the pressed keys.
 window.addEventListener('keydown', (e) => {
     if (e.keyCode == 39) {
         keyboard.RIGHT = true;
@@ -172,7 +178,8 @@ window.addEventListener('keydown', (e) => {
     }
 });
 
-// wenn keine Pfeiltaste gedrückt wird (keyup), wird die Variable die in der class Keyboard definiert ist (wieder) false
+// Event listener for releasing keyboard keys and updating the keyboard object accordingly
+// This code listens for keyup events and updates the keyboard object based on the released keys.
 window.addEventListener('keyup', (e) => {
     if (e.keyCode == 39) {
         keyboard.RIGHT = false;
@@ -194,7 +201,11 @@ window.addEventListener('keyup', (e) => {
     }
 });
 
-// Mobile Buttons
+// Function for handling mobile buttons
+// This function sets up event listeners for touch events on mobile buttons.
+// It prevents the default behavior of touch events to ensure smooth button interactions.
+// When a button is touched, the corresponding keyboard property is set to true.
+// When the touch is released, the corresponding keyboard property is set to false.
 function mobileButtons() {
     document.getElementById('canvas').addEventListener('touchstart', (e) => {
         e.preventDefault();
@@ -241,14 +252,14 @@ function mobileButtons() {
     });
 }
 
-// Fullscreen
+// This function sets the image to fullscreen and adds or removes classes from specific elements to maintain a visually pleasing design.
 function goToFullscreen() {
     addClassesToAllElements();
     let fullscreen = document.getElementById('fullscreen');
     enterFullscreen(fullscreen);
 }
 
-// fügt allen Elementen die Fullscreen Klasse hinzu, Fullscreen Icon wird geswitcht
+// adds or removes classes from specific elements to maintain a visually pleasing design. (Fullscreen)
 function addClassesToAllElements() {
     document.getElementById('start-screen-container').classList.add('fullscreen');
     document.getElementById('loading-animation-container').classList.add('fullscreen');
@@ -273,7 +284,7 @@ function addClassesToAllElements() {
     document.getElementById('open-controls-button').classList.add('button-style-fullscreen-main-menu');
 }
 
-// in den Fullscreen hinein
+// enter Fullscreen
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
@@ -284,13 +295,13 @@ function enterFullscreen(element) {
     }
 }
 
-// aus den Fullscreen heraus
+// This function restores the image from fullscreen to its normal size and adds or removes classes from specific elements to maintain a visually pleasing design.
 function goOutFromFullscreen() {
     removeClassesFromAllElements();
     exitFullscreen();
 }
 
-// switch to normal Mode
+// adds or removes classes from specific elements to maintain a visually pleasing design. (No Fullscreen)
 function removeClassesFromAllElements() {
     document.getElementById('start-screen-container').classList.remove('fullscreen');
     document.getElementById('loading-animation-container').classList.remove('fullscreen');

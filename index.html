@@ -38,8 +38,8 @@
         <div id="fullscreen">
             <div id="start-screen-container" class="start-screen-container">
                 <button id="start-game-button" onclick="startGame()">Start</button>
-                <button id="open-story-button" onclick="openStoryTextContainer()">Story</button>
-                <button id="open-controls-button" onclick="openControlsTextContainer()">Controls</button>
+                <button id="open-story-button" onclick="openTextContainer('story-container', 'start-screen-container')">Story</button>
+                <button id="open-controls-button" onclick="openTextContainer('controls-container', 'start-screen-container')">Controls</button>
                 <img id="enter-fullscreen-img" onclick="goToFullscreen()" src="./img/10_images_extern/fullscreen.png" alt="" />
                 <img
                     id="disable-fullscreen-img"
@@ -52,7 +52,7 @@
                 <div id="loading-animation-id" class="loading-animation"></div>
             </div>
             <div id="story-container" class="d-none">
-                <div onclick="closeStoryTextContainer()" class="close-icon-container">
+                <div onclick="closeTextContainer('story-container', 'start-screen-container')" class="close-icon-container">
                     <div class="close-icon"></div>
                 </div>
                 <p>
@@ -63,7 +63,7 @@
                 </p>
             </div>
             <div id="controls-container" class="d-none">
-                <div onclick="closeControlsTextContainer()" class="close-icon-container">
+                <div onclick="closeTextContainer('controls-container', 'start-screen-container')" class="close-icon-container">
                     <div class="close-icon"></div>
                 </div>
                 <h3>Game Controls</h3>
@@ -118,13 +118,13 @@
                     </div>
                 </div>
                 <div class="you-lost-button-container">
-                    <button id="you-lost-button-1" onclick="restartGameLose()">Restart</button>
-                    <button id="you-lost-button-2" onclick="openHintsTextContainer()">Hints</button>
-                    <button id="you-lost-button-3" onclick="goToMainMenuLose()">Main Menu</button>
+                    <button id="you-lost-button-1" onclick="restartGame('you-lost-container')">Restart</button>
+                    <button id="you-lost-button-2" onclick="openTextContainer('hints-container', 'you-lost-container')">Hints</button>
+                    <button id="you-lost-button-3" onclick="goToMainMenu('you-lost-container', 'start-screen-container')">Main Menu</button>
                 </div>
             </div>
             <div id="hints-container" class="d-none">
-                <div onclick="closeHintsTextContainer()" class="close-icon-container">
+                <div onclick="closeTextContainer('hints-container', 'you-lost-container')" class="close-icon-container">
                     <div class="close-icon"></div>
                 </div>
                 <h3>Hints</h3>
@@ -157,8 +157,8 @@
                     </div>
                 </div>
                 <div class="you-lost-button-container">
-                    <button id="you-win-button-1" onclick="restartGameWin()">Restart</button>
-                    <button id="you-win-button-2" onclick="goToMainMenuWin()">Main Menu</button>
+                    <button id="you-win-button-1" onclick="restartGame('you-win-container')">Restart</button>
+                    <button id="you-win-button-2" onclick="goToMainMenu('you-win-container', 'start-screen-container')">Main Menu</button>
                 </div>
             </div>
             <div id="canvas-container" class="d-none">

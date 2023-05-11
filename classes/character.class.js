@@ -95,7 +95,7 @@ class Character extends MovableObject {
     animate() {
         setStoppableInterval(() => {
             // nach rechts laufen
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            if (this.world.keyboard.RIGHT && this.x < this.world.endboss.x) {
                 this.moveRight();
             }
             // nach links laufen

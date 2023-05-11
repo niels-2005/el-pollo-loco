@@ -1,5 +1,6 @@
 class World {
     character = new Character();
+    endboss = new Endboss();
     level = level1;
     canvas;
     ctx;
@@ -148,11 +149,26 @@ class World {
         this.statusBarBottle.setCollected(this.statusBarBottle.collected);
     }
 
-    // definiert eine bottle und pusht sie in ein array, wodurch bottles geworfen werden können
+    // checkt geworfene Bottles, if Abfrage ob bottles nach links oder rechts geworfen werden
     throwBottle() {
-        checkThrowedBottles();
         this.collectedBottles--;
-        let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.character.otherDirection);
+        checkThrowedBottles();
+        if (this.character.otherDirection) {
+            this.bottleThrowingLeft();
+        } else {
+            this.bottleThrowingRight();
+        }
+    }
+
+    // wirft die bottle nah dem Character nach links
+    bottleThrowingLeft() {
+        let bottle = new ThrowableObject(this.character.x - 20, this.character.y + 100, this.character.otherDirection);
+        this.throwableObject.push(bottle);
+    }
+
+    // wirft die bottle nah dem Character nach rechts
+    bottleThrowingRight() {
+        let bottle = new ThrowableObject(this.character.x + 40, this.character.y + 100, this.character.otherDirection);
         this.throwableObject.push(bottle);
     }
 

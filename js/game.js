@@ -114,76 +114,40 @@ function stopBackgroundMusic() {
     gameEndbossMusic.pause();
 }
 
-// zeigt den loading Screen an
-function startLoadingScreen() {
-    document.getElementById('start-screen-container').classList.add('d-none');
-    document.getElementById('loading-animation-container').classList.remove('d-none');
-}
-
 // zeigt Canvas
 function showCanvas() {
     document.getElementById('loading-animation-container').classList.add('d-none');
     document.getElementById('canvas-container').classList.remove('d-none');
 }
 
-// öffnet den Container wo die Story über Pepe steht
-function openStoryTextContainer() {
-    document.getElementById('story-container').classList.remove('d-none');
+// zeigt den loading Screen an
+function startLoadingScreen() {
     document.getElementById('start-screen-container').classList.add('d-none');
+    document.getElementById('loading-animation-container').classList.remove('d-none');
 }
 
-// schließt den Container wo die Story über Pepe steht
-function closeStoryTextContainer() {
-    document.getElementById('story-container').classList.add('d-none');
-    document.getElementById('start-screen-container').classList.remove('d-none');
+// öffnet alle Textcontainer über Funktionsparameter definiert in der index.html
+function openTextContainer(id1, id2) {
+    document.getElementById(id1).classList.remove('d-none');
+    document.getElementById(id2).classList.add('d-none');
 }
 
-// öffnet den Container wo die Steuerungen stehen
-function openControlsTextContainer() {
-    document.getElementById('controls-container').classList.remove('d-none');
-    document.getElementById('start-screen-container').classList.add('d-none');
+// schließt alle Textcontainer über Funktionsparameter definiert in der index.html
+function closeTextContainer(id1, id2) {
+    document.getElementById(id1).classList.add('d-none');
+    document.getElementById(id2).classList.remove('d-none');
 }
 
-// schließt den Container wo die Steuerungen stehen
-function closeControlsTextContainer() {
-    document.getElementById('controls-container').classList.add('d-none');
-    document.getElementById('start-screen-container').classList.remove('d-none');
+// zum hauptmenü gehen, Funktionsparameter definiert in der index.html
+function goToMainMenu(id1, id2) {
+    document.getElementById(id1).classList.add('d-none');
+    document.getElementById(id2).classList.remove('d-none');
 }
 
-// spiel neustarten bei lose
-function restartGameLose() {
-    document.getElementById('you-lost-container').classList.add('d-none');
+// spiel neustarten
+function restartGame(id) {
+    document.getElementById(id).classList.add('d-none');
     startGame();
-}
-
-// zum hauptmenü zurückgehen bei lose
-function goToMainMenuLose() {
-    document.getElementById('you-lost-container').classList.add('d-none');
-    document.getElementById('start-screen-container').classList.remove('d-none');
-}
-
-// spiel neustarten bei win
-function restartGameWin() {
-    document.getElementById('you-win-container').classList.add('d-none');
-    startGame();
-}
-
-// zum hauptmenü zurückgehen bei win
-function goToMainMenuWin() {
-    document.getElementById('you-win-container').classList.add('d-none');
-    document.getElementById('start-screen-container').classList.remove('d-none');
-}
-
-// hinweis container öffnen
-function openHintsTextContainer() {
-    document.getElementById('hints-container').classList.remove('d-none');
-    document.getElementById('you-lost-container').classList.add('d-none');
-}
-
-// hinweis container schließen
-function closeHintsTextContainer() {
-    document.getElementById('hints-container').classList.add('d-none');
-    document.getElementById('you-lost-container').classList.remove('d-none');
 }
 
 // wenn eine Pfeiltaste gedrückt wird (keydown), wird die Variable die in der class Keyboard definiert ist true

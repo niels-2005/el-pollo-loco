@@ -99,9 +99,10 @@ class Character extends MovableObject {
     //  The camera position is adjusted to keep the character in focus with a slight offset.
     animate() {
         setStoppableInterval(() => {
-            if (this.world.keyboard.RIGHT && this.world.character.x < this.world.endboss.x) {
+            if (this.world.keyboard.RIGHT && this.world.character.x <= this.world.endboss.x) {
                 this.moveRight();
             }
+
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
             }

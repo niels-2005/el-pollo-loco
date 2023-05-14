@@ -35,18 +35,6 @@ function stopGame() {
     intervalIDs.forEach(clearInterval);
 }
 
-// This function displays the loading screen.
-function startLoadingScreen() {
-    document.getElementById('start-screen-container').classList.add('d-none');
-    document.getElementById('loading-animation-container').classList.remove('d-none');
-}
-
-// This function displays the canvas.
-function showCanvas() {
-    document.getElementById('loading-animation-container').classList.add('d-none');
-    document.getElementById('canvas-container').classList.remove('d-none');
-}
-
 // This function resets the statistics to zero.
 function setEndgameStatisticToNull() {
     bottlesCollectedInMenu = 0;
@@ -75,6 +63,14 @@ function checkKilledChicken() {
     killedChickenInMenu++;
 }
 
+//  it displays the number of collected bottles, the number of bottles thrown, the number of collected coins, and the number of chickens killed.
+function showGameStatistic(id1, id2, id3, id4) {
+    document.getElementById(id1).innerHTML = bottlesCollectedInMenu;
+    document.getElementById(id2).innerHTML = bottlesThrowedInMenu;
+    document.getElementById(id3).innerHTML = coinsCollectedInMenu;
+    document.getElementById(id4).innerHTML = killedChickenInMenu;
+}
+
 // This function is executed when the character has no more energy.
 function gameLost() {
     stopBackgroundMusic();
@@ -92,18 +88,10 @@ function stopBackgroundMusic() {
 function showGameLostContainer() {
     setTimeout(() => {
         gameLoseSound.play();
-        showsGameLoseStatistic();
+        showGameStatistic('collected-bottles-ingame', 'throwed-bottles-ingame', 'collected-coins-ingame', 'killed-chicken-ingame');
         document.getElementById('you-lost-container').classList.remove('d-none');
         document.getElementById('canvas-container').classList.add('d-none');
     }, 500);
-}
-
-// In the "You Lost Container", it displays the number of collected bottles, the number of bottles thrown, the number of collected coins, and the number of chickens killed.
-function showsGameLoseStatistic() {
-    document.getElementById('collected-bottles-ingame').innerHTML = bottlesCollectedInMenu;
-    document.getElementById('throwed-bottles-ingame').innerHTML = bottlesThrowedInMenu;
-    document.getElementById('collected-coins-ingame').innerHTML = coinsCollectedInMenu;
-    document.getElementById('killed-chicken-ingame').innerHTML = killedChickenInMenu;
 }
 
 // This function is executed when the Endboss has no more energy.
@@ -116,18 +104,22 @@ function gameWon() {
 //  It displays statistics, sets the canvas display to "none", and displays the "You Win Container".
 function showGameWinContainer() {
     setTimeout(() => {
-        showsGameWinStatistic();
+        showGameStatistic('collected-bottles-ingame-win', 'throwed-bottles-ingame-win', 'collected-coins-ingame-win', 'killed-chicken-ingame-win');
         document.getElementById('you-win-container').classList.remove('d-none');
         document.getElementById('canvas-container').classList.add('d-none');
     }, 1200);
 }
 
-// In the "You Win Container", it displays the number of collected bottles, the number of bottles thrown, the number of collected coins, and the number of chickens killed.
-function showsGameWinStatistic() {
-    document.getElementById('collected-bottles-ingame-win').innerHTML = bottlesCollectedInMenu;
-    document.getElementById('throwed-bottles-ingame-win').innerHTML = bottlesThrowedInMenu;
-    document.getElementById('collected-coins-ingame-win').innerHTML = coinsCollectedInMenu;
-    document.getElementById('killed-chicken-ingame-win').innerHTML = killedChickenInMenu;
+// This function displays the loading screen.
+function startLoadingScreen() {
+    document.getElementById('start-screen-container').classList.add('d-none');
+    document.getElementById('loading-animation-container').classList.remove('d-none');
+}
+
+// This function displays the canvas.
+function showCanvas() {
+    document.getElementById('loading-animation-container').classList.add('d-none');
+    document.getElementById('canvas-container').classList.remove('d-none');
 }
 
 // This function opens all text containers specified by the parameters id1 and id2, which are defined in the index.html file.

@@ -1,3 +1,7 @@
+/**
+ * Chicken is a class for chicken enemy objects in the game.
+ * @extends MovableObject
+ */
 class Chicken extends MovableObject {
     height = 90;
     width = 75;
@@ -18,12 +22,14 @@ class Chicken extends MovableObject {
 
     IMAGES_DEAD = ['img/3_enemies_chicken/chicken_normal/2_dead/dead.png'];
 
-    // The constructor function initializes a chicken enemy object.
-    //  It calls the loadImage method to load the image for the chicken's default walking animation.
-    //  It also loads the images for the walking and dead animations using the loadImages method.
-    //  The initial position of the chicken on the x-axis is set randomly between 500 and 2500.
-    // The speed of the chicken is set randomly between 0.15 and 0.45.
-    // Finally, the chickenAnimations function is called to set up the chicken's animations.
+    /**
+     * The constructor initializes a chicken enemy object.
+     * It loads the image for the chicken's default walking animation,
+     * as well as the images for the walking and dead animations.
+     * The initial position of the chicken on the x-axis is set randomly between 500 and 2500.
+     * The speed of the chicken is set randomly between 0.15 and 0.45.
+     * The chicken's animations are also set up in the constructor.
+     */
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);

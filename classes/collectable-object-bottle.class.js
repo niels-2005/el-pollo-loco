@@ -1,3 +1,7 @@
+/**
+ * CollectableObjectBottle is a class for SalsaBottle collectable objects in the game.
+ * @extends MovableObject
+ */
 class CollectableObjectBottle extends MovableObject {
     height = 100;
     width = 100;
@@ -5,9 +9,11 @@ class CollectableObjectBottle extends MovableObject {
 
     IMAGES_BOTTLE = ['img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'];
 
-    // The constructor initializes a SalsaBottle object.
-    //  It loads the image for the bottle and sets its initial position on the x-axis randomly between 200 and 2200.
-    // The animate function is then called to start animating the bottle.
+    /**
+     * The constructor initializes a SalsaBottle object.
+     * It loads the image for the bottle, sets its initial x-axis position randomly,
+     * and sets up its animations.
+     */
     constructor() {
         super().loadImage('img/6_salsa_bottle/1_salsa_bottle_on_ground.png');
         this.loadImages(this.IMAGES_BOTTLE);
@@ -15,9 +21,11 @@ class CollectableObjectBottle extends MovableObject {
         this.animate();
     }
 
-    // The animate function sets up a repeating interval to play the animation of the salsa bottle.
-    // It calls the playAnimation function with the IMAGES_BOTTLE array as the frames of the animation.
-    // The interval is set to 600 milliseconds, so the animation will update every 0.6 seconds.
+    /**
+     * The animate method sets up the bottle's animation.
+     * It uses a setStoppableInterval to periodically update the bottle's animation
+     * at approximately every 0.6 seconds.
+     */
     animate() {
         setStoppableInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLE);

@@ -1,3 +1,6 @@
+/**
+ * The World class represents the game environment where all objects interact.
+ */
 class World {
     character = new Character();
     endboss = new Endboss();
@@ -16,9 +19,11 @@ class World {
     characterNotHitable = false;
     bottleCollidedWithEndboss = false;
 
-    // This constructor initializes the game object by setting up the canvas context,
-    // storing canvas and keyboard references, and calling necessary functions for drawing,
-    // setting up the game world, and running the game and bottle loops.
+    /**
+     * Constructs a new game world.
+     * @param {object} canvas - The canvas on which the game is drawn.
+     * @param {object} keyboard - The keyboard object capturing the user inputs.
+     */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -29,12 +34,16 @@ class World {
         this.runBottles();
     }
 
-    // This function links the Character and World class.
+    /**
+     * Links the Character and World class.
+     */
     setWorld() {
         this.character.world = this;
     }
 
-    // This function sets an interval that checks  60 times per second for collisions, to determine if a chicken has been killed or if the end boss has been attacked.
+    /**
+     * Checks for collisions and game updates at a set interval.
+     */
     run() {
         setStoppableInterval(() => {
             this.checkCollisionsWithChicken();
@@ -46,16 +55,18 @@ class World {
         }, 1000 / 60);
     }
 
-    // This function sets an interval that checks every 150ms if a bottle has been thrown.
+    /**
+     * Checks for thrown bottles at a set interval.
+     */
     runBottles() {
         setStoppableInterval(() => {
             this.checkThrowObjects();
         }, 150);
     }
 
-    // This function checks for collisions between the character and chickens.
-    //  If the character is positioned above a chicken and is not injured, the chicken is killed.
-    // Otherwise, the character takes damage, and the health status bar is updated.
+    /**
+     * Checks for collisions between the character and chickens.
+     */
     checkCollisionsWithChicken() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
@@ -69,8 +80,10 @@ class World {
         });
     }
 
-    // This function gives the character a speed on the y-axis.
-    //  executes the function chickenIsDead, and sets a setTimeout that executes the deleteEnemy function after 500ms.
+    /**
+     * Kills a chicken enemy.
+     * @param {object} enemy - The enemy to be killed.
+     */
     killChicken(enemy) {
         this.character.speedY = 30;
         this.chickenIsDead(enemy);
@@ -80,14 +93,19 @@ class World {
         }, 500);
     }
 
-    // This function sets the energy of the chickens to 0 and plays a sound.
+    /**
+     * Sets the enemy's energy to 0 and plays a death sound.
+     * @param {object} enemy - The enemy that is dying.
+     */
     chickenIsDead(enemy) {
         enemy.energy = 0;
         ChickenDeadSound.play();
     }
 
-    // This function removes the respective killed chicken from an array.
-    // The function checkKilledChicken() is defined for endgame statistics.
+    /**
+     * Removes the killed enemy from the enemy array.
+     * @param {object} enemy - The enemy to be removed.
+     */
     deleteEnemy(enemy) {
         let i = this.level.enemies.indexOf(enemy);
         if (i > -1) {
@@ -96,9 +114,9 @@ class World {
         }
     }
 
-    // This function checks for collisions between the character and the end boss.
-    // If there is a collision and the character is vulnerable, the character is attacked by the end boss.
-    // The health status bar is updated, and the character becomes invulnerable for 1.5 seconds.
+    /**
+     * Checks for collisions between the character and the end boss.
+     */
     checkCollisionsWithEndboss() {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss) && !this.characterNotHitable) {
@@ -109,8 +127,9 @@ class World {
         });
     }
 
-    // This function sets the global variable characterNotHitable to true.
-    //  after 1.5 seconds (using setTimeout), it sets the variable back to false. This makes the character invulnerable during that time.
+    /**
+     * Makes the character temporarily invulnerable.
+     */
     characterInvulnerable() {
         this.characterNotHitable = true;
         setTimeout(() => {
@@ -118,9 +137,9 @@ class World {
         }, 1500);
     }
 
-    // This function checks if a bottle collides with the end boss.
-    //  If there is a collision and the end boss is vulnerable, the variable bottleCollidedWithEndboss is set to true, indicating that the end boss has been attacked.
-    // Finally, the health status bar of the end boss is updated.
+    /**
+     * Checks if a bottle collides with the end boss.
+     */
     attackEndboss() {
         this.throwableObject.forEach((bottle) => {
             this.level.endboss.forEach((endboss) => {
@@ -133,15 +152,18 @@ class World {
         this.statusBarEndboss.setPercentage(world.level.endboss[0].energy);
     }
 
-    // This function indicates that the end boss has been attacked with a bottle.
-    // The end boss becomes invulnerable for 1.5 seconds.
+    /**
+     * Indicates that the end boss has been attacked with a bottle and makes the boss temporarily invulnerable.
+     * @param {object} endboss - The end boss that has been attacked.
+     */
     endbossGotAttacked(endboss) {
         endboss.hittedByBottle();
         this.endbossInvulnerable();
     }
 
-    // This function sets the global variable endbossNotHitable to true.
-    //  after 1.5 seconds (using setTimeout), it sets the variable back to false. This makes the Endboss invulnerable during that time.
+    /**
+     * Makes the end boss temporarily invulnerable.
+     */
     endbossInvulnerable() {
         this.endbossNotHitable = true;
         setTimeout(() => {
@@ -149,8 +171,9 @@ class World {
         }, 1500);
     }
 
-    // If the "D" key on the keyboard is pressed and the variable collectedBottles is greater than 0, a bottle can be thrown.
-    // The bottle status bar is updated accordingly.
+    /**
+     * Checks if a bottle can be thrown based on keyboard input and bottle count.
+     */
     checkThrowObjects() {
         if (this.keyboard.D && this.collectedBottles > 0) {
             this.throwBottle();
@@ -158,15 +181,17 @@ class World {
         }
     }
 
-    // This function updates the bottle status bar to reflect a negative value, indicating that a bottle has been thrown.
+    /**
+     * Updates the bottle status bar to reflect a negative value.
+     */
     reduceBottleBar() {
         this.statusBarBottle.collected--;
         this.statusBarBottle.setCollected(this.statusBarBottle.collected);
     }
 
-    // This function checks thrown bottles for endgame statistics.
-    // If the character is moving to the left, the bottle will be thrown to the left.
-    //  If the character is moving to the right, the bottle will be thrown to the right.
+    /**
+     * Checks thrown bottles and determines the direction of the throw.
+     */
     throwBottle() {
         this.collectedBottles--;
         checkThrowedBottles();
@@ -177,20 +202,25 @@ class World {
         }
     }
 
-    // This function throws the bottle to the left when the character is moving to the left.
+    /**
+     * Throws the bottle to the left.
+     */
     bottleThrowingLeft() {
         let bottle = new ThrowableObject(this.character.x - 20, this.character.y + 100, this.character.otherDirection);
         this.throwableObject.push(bottle);
     }
 
-    // This function throws the bottle to the right when the character is moving to the right.
+    /**
+     * Throws the bottle to the right.
+     */
     bottleThrowingRight() {
         let bottle = new ThrowableObject(this.character.x + 40, this.character.y + 100, this.character.otherDirection);
         this.throwableObject.push(bottle);
     }
 
-    // This function checks for collisions between the character and a bottle.
-    //  If a collision occurs, a sound is played, the bottle is collected, and the bottle status bar is updated to a positive value.
+    /**
+     * Checks for collisions between the character and a bottle.
+     */
     checkCollisionsBottle() {
         this.level.collectableObjectBottle.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
@@ -201,7 +231,10 @@ class World {
         });
     }
 
-    // This function checks collected bottles for endgame statistics and removes the collected bottle from the array to make it disappear from the world.
+    /**
+     * Updates game statistics and removes the collected bottle from the game world.
+     * @param {object} bottle - The bottle to be collected.
+     */
     bottleCollected(bottle) {
         checkCollectedBottles();
         this.collectedBottles++;
@@ -209,13 +242,17 @@ class World {
         this.level.collectableObjectBottle.splice(i, 1);
     }
 
-    // This function updates the bottle status bar to reflect a positive value.
+    /**
+     * Updates the bottle status bar to reflect a positive value.
+     */
     increaseBottleBar() {
         this.statusBarBottle.collected++;
         this.statusBarBottle.setCollected(this.statusBarBottle.collected);
     }
 
-    // This function checks for collisions between a bottle and a chicken. If a collision occurs, the chicken is killed.
+    /**
+     * Checks for collisions between a bottle and a chicken.
+     */
     killChickenWithBottle() {
         this.throwableObject.forEach((bottle) => {
             this.level.enemies.forEach((enemy) => {
@@ -226,7 +263,10 @@ class World {
         });
     }
 
-    // This function sets the chicken's energy to 0, plays a sound, and deletes the chicken after a setTimeout of 500ms.
+    /**
+     * Kills a chicken with a bottle.
+     * @param {object} enemy - The enemy to be killed
+     */
     chickenKilledWithBottle(enemy) {
         enemy.energy = 0;
         ChickenDeadSound.play();
@@ -236,8 +276,10 @@ class World {
         }, 500);
     }
 
-    // This function checks for a collision between the character and a coin.
-    //  If a collision occurs, a sound is played, the coin status bar is updated to a positive value, and the coin is collected.
+    /**
+     * checkCollisionsCoin() checks for a collision between the character and a coin.
+     * If a collision occurs, a sound is played, the coin status bar is updated to a positive value, and the coin is collected.
+     */
     checkCollisionsCoin() {
         this.level.collectableObjectCoin.forEach((coin) => {
             if (this.character.isColliding(coin)) {
@@ -248,31 +290,41 @@ class World {
         });
     }
 
-    // This function updates the coin status bar to reflect a positive value.
+    /**
+     * increaseCoinBar() updates the coin status bar to reflect a positive value.
+     */
     increaseCoinBar() {
         this.statusBarCoin.collected++;
         this.statusBarCoin.setCollected(this.statusBarCoin.collected);
     }
 
-    // This function checks collected coins for endgame statistics and removes the collected coin from an array to make it disappear from the game world.
+    /**
+     * coinCollected(coin) checks collected coins for endgame statistics and removes the collected coin from an array to make it disappear from the game world.
+     * @param {Object} coin - The coin that has been collected.
+     */
     coinCollected(coin) {
         checkCollectedCoins();
         let i = this.level.collectableObjectCoin.indexOf(coin);
         this.level.collectableObjectCoin.splice(i, 1);
     }
 
-    // This function draws the game world.
-    // At the beginning, the canvas is cleared, then background objects, status bars, and movable objects are added.
-    //  The drawingFrames() function determines the frames per second (FPS) of the game, depending on the graphics card.
+    /**
+     * draw() draws the game world.
+     * At the beginning, the canvas is cleared, then background objects, status bars, and movable objects are added.
+     * The drawingFrames() function determines the frames per second (FPS) of the game, depending on the graphics card.
+     */
     draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // cleart bei jedem zeichnen das canvas
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.addBackgroundObjects();
         this.addStatusBars();
         this.addMoveableObjects();
         this.drawingFrames();
     }
 
-    // adds Background Landscape & Clouds
+    /**
+     * addBackgroundObjects() adds the background landscape and clouds to the game world.
+     * It translates the context's x-coordinate according to the camera_x value, adds the objects to the map, and then translates the context's x-coordinate back to its original position.
+     */
     addBackgroundObjects() {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
@@ -280,8 +332,10 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
     }
 
-    // adds the Statusbars (Health, Bottle, Coin)
-    // When the end boss is reached, the function adds the end boss's status bar to the game.
+    /**
+     * addStatusBars() adds the status bars (health, bottle, coin) to the game world.
+     * When the end boss is reached, the function also adds the end boss's status bar to the game.
+     */
     addStatusBars() {
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarBottle);
@@ -291,7 +345,11 @@ class World {
         }
     }
 
-    // This function adds the character, chickens, end boss, coins, and bottles to the game.
+    /**
+     * addMoveableObjects() adds the character, enemies, end boss, coins, and bottles to the game.
+     * It translates the context's x-coordinate according to the camera_x value. Then it calls the addToMap() function to add each of the game objects to the map.
+     * After all objects have been added, it translates the context's x-coordinate back to its original position.
+     */
     addMoveableObjects() {
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
@@ -303,7 +361,10 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
     }
 
-    // This function determines the frames per second (FPS) of the game based on the graphics card.
+    /**
+     * drawingFrames() determines the frames per second (FPS) of the game.
+     * It calls the requestAnimationFrame() method to redraw the game screen at a rate suitable for the device's graphics capabilities.
+     */
     drawingFrames() {
         let self = this;
         requestAnimationFrame(function () {
@@ -311,14 +372,21 @@ class World {
         });
     }
 
-    // This function draws and adds the specified objects to the game.
+    /**
+     * addObjectsToMap(objects) draws and adds the specified objects to the game.
+     * @param {Array} objects - The array of objects to be added to the map.
+     */
     addObjectsToMap(objects) {
         objects.forEach((o) => {
             this.addToMap(o);
         });
     }
 
-    // Movable objects are added to the game world, and if an object has a different direction, it is drawn accordingly.
+    /**
+     * addToMap(mo) adds a movable object to the game world.
+     * If the object has a different direction, it flips the image accordingly before drawing.
+     * @param {Object} mo - The movable object to be added to the map.
+     */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
@@ -329,9 +397,12 @@ class World {
         }
     }
 
-    // This function flips the image horizontally for a movable object.
-    // It saves the current canvas state, translates to the width of the object,
-    // applies a scale transformation to flip the image, and adjusts the object's x-coordinate accordingly.
+    /**
+     * flipImage(mo) flips the image horizontally for a movable object.
+     * It saves the current canvas state, translates to the width of the object,
+     * applies a scale transformation to flip the image, and adjusts the object's x-coordinate accordingly.
+     * @param {Object} mo - The movable object whose image is to be flipped.
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -339,9 +410,12 @@ class World {
         mo.x = mo.x * -1;
     }
 
-    // This function restores the image to its original orientation after flipping.
-    // It adjusts the object's x-coordinate to its original value before the flip,
-    // and restores the previously saved canvas state to revert the transformation.
+    /**
+     * flipImageBack(mo) restores the image to its original orientation after flipping.
+     * It adjusts the object's x-coordinate to its original value before the flip,
+     * and restores the previously saved canvas state to revert the transformation.
+     * @param {Object} mo - The movable object whose image is to be restored.
+     */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();

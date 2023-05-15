@@ -1,3 +1,8 @@
+/**
+ * Class representing a character that extends MovableObject.
+ * This character can move around, jump, and interact with other game objects.
+ * @extends MovableObject
+ */
 class Character extends MovableObject {
     height = 330;
     width = 120;
@@ -80,8 +85,11 @@ class Character extends MovableObject {
     world;
     speed = 6;
 
-    // This constructor initializes the Character object by loading its different images for various states such as walking, jumping, dead, hurt, idle, and long idle.
-    // It applies gravity to the character and starts the animation loop for the character's movement.
+    /**
+     * Constructs a new Character instance.
+     * Loads the image for the character in various states (walking, jumping, etc.)
+     * Applies gravity to the character and starts the animation loop for the character's movement.
+     */
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/long_idle/I-11.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -94,9 +102,11 @@ class Character extends MovableObject {
         this.animate();
     }
 
-    // The animate function controls the character's movement and camera position based on keyboard input.
-    //  It updates the character's position and applies a vertical speed for jumping if the space bar is pressed.
-    //  The camera position is adjusted to keep the character in focus with a slight offset.
+    /**
+     * Controls the character's movement and camera position based on keyboard input.
+     * Updates the character's position and applies a vertical speed for jumping.
+     * Adjusts the camera position to keep the character in focus with a slight offset.
+     */
     animate() {
         setStoppableInterval(() => {
             if (this.world.keyboard.RIGHT && this.world.character.x <= this.world.endboss.x) {
@@ -112,9 +122,12 @@ class Character extends MovableObject {
             this.world.camera_x = -this.x + 70;
         }, 1000 / 60);
 
-        // The setStoppableInterval function controls the character's animation based on its current state.
-        // It checks if the character is dead, hurt, jumping, walking, standing, or in a long idle state, and triggers the corresponding animation function.
-        // The interval is set to 100 milliseconds for smooth animation.
+        /**
+         * It uses setStoppableInterval to control the character's animation based on its current state.
+         * It checks if the character is in various states like dead, hurt, jumping, walking, standing, or in a long idle state,
+         * and triggers the corresponding animation function.
+         * The interval is set to 100 milliseconds for smooth animation.
+         */
         setStoppableInterval(() => {
             if (this.isDead()) {
                 this.deathAnimation();
@@ -132,8 +145,10 @@ class Character extends MovableObject {
         }, 100);
     }
 
-    // The deathAnimation function plays the animation for the character's death.
-    //  triggers the characterDeadSound, stops all game sounds, calls the gameLost function, and stops the game.
+    /**
+     * Plays the animation for the character's death.
+     * Triggers the characterDeadSound, stops all game sounds, calls the gameLost function, and stops the game.
+     */
     deathAnimation() {
         this.playAnimation(this.IMAGES_DEAD);
         characterDeadSound.play();
@@ -142,7 +157,9 @@ class Character extends MovableObject {
         this.stopsGame();
     }
 
-    // The stopsGame function sets a timeout of 700 milliseconds to stop the game and reset the variable arrivedEndboss to false.
+    /**
+     * Sets a timeout to stop the game and reset the variable arrivedEndboss to false after a short delay.
+     */
     stopsGame() {
         setTimeout(() => {
             stopGame();
@@ -150,46 +167,63 @@ class Character extends MovableObject {
         }, 700);
     }
 
-    // The hurtAnimation function plays the hurt animation of the character, plays the character hurt sound, and resets the checkingLongIdle variable.
+    /**
+     * Plays the hurt animation of the character.
+     * Plays the character hurt sound, and resets the checkingLongIdle variable.
+     */
     hurtAnimation() {
         this.playAnimation(this.IMAGES_HURT);
         characterHurtSound.play();
         this.checkingLongIdle = 0;
     }
 
-    // The jumpAnimation function plays the jumping animation of the character, plays the character jump sound, and resets the checkingLongIdle variable.
+    /**
+     * Plays the jumping animation of the character.
+     * Plays the character jump sound, and resets the checkingLongIdle variable.
+     */
     jumpAnimation() {
         this.playAnimation(this.IMAGES_JUMPING);
         characterJumpSound.play();
         this.checkingLongIdle = 0;
     }
 
-    // The isWalking function returns true if the character is currently moving to the right or left based on the keyboard input.
+    /**
+     * Checks if the character is currently moving to the right or left based on the keyboard input.
+     * @returns {boolean} True if the character is moving, false otherwise.
+     */
     isWalking() {
         return this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
     }
 
-    // The walkingAnimation function plays the animation for the character walking and resets the counter for checking long idle.
+    /**
+     * Plays the animation for the character walking and resets the counter for checking long idle.
+     */
     walkingAnimation() {
         this.playAnimation(this.IMAGES_WALKING);
         this.checkingLongIdle = 0;
     }
 
-    // The isStanding function checks if the character is in a standing state by comparing the checkingLongIdle counter to a threshold.
-    // If the counter is below the threshold, it returns true; otherwise, it returns false.
+    /**
+     * Checks if the character is in a standing state by comparing the checkingLongIdle counter to a threshold.
+     * @returns {boolean} True if the character is standing, false otherwise.
+     */
     isStanding() {
         return this.checkingLongIdle < 30;
     }
 
-    // The idleAnimation function plays the idle animation of the character by calling the playAnimation method with the IMAGES_IDLE array.
-    // It also increments the checkingLongIdle counter to track the duration of the idle state.
+    /**
+     * Plays the idle animation of the character.
+     * Also increments the checkingLongIdle counter to track the duration of the idle state.
+     */
     idleAnimation() {
         this.playAnimation(this.IMAGES_IDLE);
         this.checkingLongIdle++;
     }
 
-    // The longIdleAnimation function plays the long idle animation of the character by calling the playAnimation method with the IMAGES_LONG_IDLE array.
-    // This animation is used when the character remains idle for an extended period of time.
+    /**
+     * Plays the long idle animation of the character.
+     * This animation is used when the character remains idle for an extended period of time.
+     */
     longIdleAnimation() {
         this.playAnimation(this.IMAGES_LONG_IDLE);
     }

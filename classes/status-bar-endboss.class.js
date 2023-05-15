@@ -1,3 +1,7 @@
+/**
+ * The StatusBarEndboss class represents the status bar for the endboss object in the game.
+ * @extends DrawableObject
+ */
 class StatusBarEndboss extends DrawableObject {
     IMAGES_HEALTH = [
         'img/7_statusbars/1_statusbar/2_statusbar_health/orange/0.png',
@@ -14,7 +18,11 @@ class StatusBarEndboss extends DrawableObject {
     height = 60;
     width = 250;
 
-    // In the constructor, the IMAGES_HEALTH are loaded using the loadImages method, and the percentage is set to 100 using the setPercentage method.
+    /**
+     * The constructor of the StatusBarEndboss class.
+     * It initializes the status bar for the endboss object by loading the images,
+     * and sets the initial health percentage to 100.
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES_HEALTH);
@@ -22,9 +30,11 @@ class StatusBarEndboss extends DrawableObject {
         this.setPercentage(100);
     }
 
-    //The setPercentage method sets the percent property of the statusBar to the specified value.
-    // It then determines the image path based on the resolved image index using the resolveImageIndex() method.
-    // Finally, it updates the img property with the corresponding image from the imageCache.
+    /**
+     * The setPercentage method updates the health percentage property of the status bar object
+     * and changes the displayed image according to the health percentage.
+     * @param {number} percent - The health percentage of the endboss.
+     */
     setPercentage(percent) {
         this.percent = percent;
         let path = this.IMAGES_HEALTH[this.resolveImageIndexHealth()];

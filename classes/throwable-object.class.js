@@ -1,3 +1,7 @@
+/**
+ * The ThrowableObject class represents an object that the character can throw.
+ * @extends MovableObject
+ */
 class ThrowableObject extends MovableObject {
     height = 100;
     offset = {
@@ -22,12 +26,12 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
     ];
 
-    // In this constructor, the class initializes an instance of the object.
-    //  It loads an image for the bottle and also loads images for the throwing animation and bottle splash animation.
-    // The x and y parameters specify the initial position of the bottle.
-    // The characterDirection parameter indicates the direction in which the character is facing, and it is passed from the world.
-    // After initializing the properties, the throw() function is called to start the throwing animation.
-    // Finally, the bottleAnimations() function is invoked to handle the different animations of the bottle.
+    /**
+     * Constructs a new throwable object.
+     * @param {number} x - The initial x-coordinate of the throwable object.
+     * @param {number} y - The initial y-coordinate of the throwable object.
+     * @param {boolean} characterDirection - The direction the character is facing.
+     */
     constructor(x, y, characterDirection) {
         super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.IMAGES_THROWING_BOTTLE);
@@ -39,22 +43,18 @@ class ThrowableObject extends MovableObject {
         this.bottleAnimations();
     }
 
-    // In the throw() function, the bottle's vertical speed speedY is set to 30, indicating that it is thrown upward.
-    // Then, the applyGravityBottle() function is called to simulate the effect of gravity on the bottle's movement.
-    // Additionally, the throwingLeftOrRight() function is called to determine the horizontal direction in which the bottle should be thrown
-    // based on the characterDirection property.
+    /**
+     * Initiates the throwing action for the throwable object.
+     */
     throw() {
         this.speedY = 30;
         this.applyGravityBottle();
         this.throwingLeftOrRight();
     }
 
-    // The throwingLeftOrRight() function is responsible for playing the throw bottle sound and setting up an interval
-    // to move the bottle horizontally in the appropriate direction based on the characterDirection.
-    // If characterDirection is true, indicating that the character is facing left, the bottle is moved to the left (this.x -= 10) every 25 milliseconds.
-    //  Otherwise, if characterDirection is false, indicating that the character is facing right, the bottle is moved to the right (this.x += 10) every 25 milliseconds.
-    // The interval is cleared after a timeout of 1000 milliseconds using clearInterval(this.throwingInterval).
-    // This ensures that the bottle stops moving horizontally after a certain duration.
+    /**
+     * Determines the horizontal direction of the throw based on the character's direction.
+     */
     throwingLeftOrRight() {
         throwBottleSound.play();
         this.throwingInterval = setInterval(() => {
@@ -68,20 +68,17 @@ class ThrowableObject extends MovableObject {
         setTimeout(() => clearInterval(this.throwingInterval), 1000);
     }
 
-    // The bottleAnimations() function manages the animations and interactions of the bottle object.
-    //It handles the throwing animation and the splash animation when the bottle collides with an object.
-    // It also checks for collisions with the end boss and performs appropriate actions.
+    /**
+     * Handles the animations and interactions of the throwable object.
+     */
     bottleAnimations() {
         this.splashOrThrowingAnimation();
         this.updateBottleCollidedWithEndboss();
     }
 
-    //  The splashOrThrowingAnimation() function controls the animation of the bottle object.
-    // It uses an interval to continuously check the position of the bottle and determine whether to play the splash animation or the throwing animation.
-    // If the bottle's y-coordinate is greater than 240 or if it has collided with the end boss (tracked by the world.bottleCollidedWithEndboss variable),
-    //  the function calls the playSplashAnimation() method to display the splash animation.
-    //  Otherwise, it calls the playAnimation() method with the IMAGES_THROWING_BOTTLE array to display the throwing animation.
-    // The interval is set to run at a rate of 15 frames per second
+    /**
+     * Determines whether to play the splash animation or the throwing animation based on the object's position and collision state.
+     */
     splashOrThrowingAnimation() {
         this.splashAnimation = setInterval(() => {
             if (this.y > 240 || world.bottleCollidedWithEndboss) {
@@ -92,16 +89,18 @@ class ThrowableObject extends MovableObject {
         }, 1000 / 15);
     }
 
-    // The updateBottleCollidedWithEndboss() function is responsible for updating the world.bottleCollidedWithEndboss variable.
-    // It sets a timeout of 50 milliseconds, and after that timeout, it sets the world.bottleCollidedWithEndboss variable to false.
+    /**
+     * Updates the world.bottleCollidedWithEndboss variable after a delay.
+     */
     updateBottleCollidedWithEndboss() {
         setTimeout(() => {
             world.bottleCollidedWithEndboss = false;
         }, 50);
     }
 
-    // The playSplashAnimation() function plays the splash animation,
-    // modifies the bottle's properties, triggers a splash sound effect, and clears the splash animation interval.
+    /**
+     * Plays the splash animation and adjusts the throwable object's properties accordingly.
+     */
     playSplashAnimation() {
         this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
         bottleSplashSound.play();
@@ -111,9 +110,9 @@ class ThrowableObject extends MovableObject {
         clearInterval(this.splashAnimation);
     }
 
-    // The splashEffect() function continuously increases the bottle's y position by 10 units and calls the deleteBottle() function.
-    // This creates a vertical downward motion for the bottle, simulating a splash effect.
-    // The function is executed every 70 milliseconds.
+    /**
+     * Simulates a splash effect by continuously increasing the throwable object's y position.
+     */
     splashEffect() {
         setInterval(() => {
             this.y += 10;
@@ -121,8 +120,9 @@ class ThrowableObject extends MovableObject {
         }, 70);
     }
 
-    // The deleteBottle() function sets the bottle's y position to 500 after a delay of 300 milliseconds.
-    // This effectively removes the bottle from the visible area, giving the appearance of the bottle being deleted or removed from the scene.
+    /**
+     * Simulates the deletion of the throwable object by moving it out of the visible area after a delay.
+     */
     deleteBottle() {
         setTimeout(() => {
             this.y = 500;

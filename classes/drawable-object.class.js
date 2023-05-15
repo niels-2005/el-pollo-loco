@@ -33,4 +33,36 @@ class DrawableObject {
             this.imageCache[path] = img;
         });
     }
+
+    resolveImageIndexCollectableObjects() {
+        if (this.collected == 0) {
+            return 0;
+        } else if (this.collected == 1) {
+            return 1;
+        } else if (this.collected == 2) {
+            return 2;
+        } else if (this.collected == 3) {
+            return 3;
+        } else if (this.collected == 4) {
+            return 4;
+        } else {
+            return 5;
+        }
+    }
+
+    resolveImageIndexHealth() {
+        if (this.percent == 100) {
+            return 5;
+        } else if (this.percent > 80) {
+            return 4;
+        } else if (this.percent > 60) {
+            return 3;
+        } else if (this.percent > 40) {
+            return 2;
+        } else if (this.percent > 20) {
+            return 1;
+        } else if (this.percent >= 0) {
+            return 0;
+        }
+    }
 }

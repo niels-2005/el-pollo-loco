@@ -27,30 +27,7 @@ class StatusBarEndboss extends DrawableObject {
     // Finally, it updates the img property with the corresponding image from the imageCache.
     setPercentage(percent) {
         this.percent = percent;
-        let path = this.IMAGES_HEALTH[this.resolveImageIndex()];
+        let path = this.IMAGES_HEALTH[this.resolveImageIndexHealth()];
         this.img = this.imageCache[path];
-    }
-
-    // The resolveImageIndex method determines the image index based on the percent property of the statusBar.
-    //  If the percent is 100, it returns 5.
-    //  If the percent is greater than 80, it returns 4.
-    //  If the percent is greater than 60, it returns 3.
-    //  If the percent is greater than 40, it returns 2.
-    // If the percent is greater than 20, it returns 1.
-    //  If the percent is 20 or less, it returns 0.
-    resolveImageIndex() {
-        if (this.percent == 100) {
-            return 5;
-        } else if (this.percent > 80) {
-            return 4;
-        } else if (this.percent > 60) {
-            return 3;
-        } else if (this.percent > 40) {
-            return 2;
-        } else if (this.percent > 20) {
-            return 1;
-        } else if (this.percent >= 0) {
-            return 0;
-        }
     }
 }

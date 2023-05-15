@@ -12,9 +12,9 @@ let killedChickenInMenu = 0;
 // The function startGame() displays a loading screen for one second.
 // After that, it draws the game world, resets the statistics to zero, sets the game sounds to the beginning state, and displays mobile buttons if necessary.
 function startGame() {
-    startLoadingScreen();
+    switchContainer('start-screen-container', 'loading-animation-container');
     setTimeout(() => {
-        showCanvas();
+        switchContainer('loading-animation-container', 'canvas-container');
         setEndgameStatisticToNull();
         gameSounds();
         initLevel();
@@ -33,6 +33,12 @@ function setStoppableInterval(fn, time) {
 // When the game is stopped, the intervals in the "intervallIDS" Array are also cleared.
 function stopGame() {
     intervalIDs.forEach(clearInterval);
+}
+
+// This function displays the loading screen or Canvas.
+function switchContainer(id1, id2) {
+    document.getElementById(id1).classList.add('d-none');
+    document.getElementById(id2).classList.remove('d-none');
 }
 
 // This function resets the statistics to zero.
@@ -108,18 +114,6 @@ function showGameWinContainer() {
         document.getElementById('you-win-container').classList.remove('d-none');
         document.getElementById('canvas-container').classList.add('d-none');
     }, 1200);
-}
-
-// This function displays the loading screen.
-function startLoadingScreen() {
-    document.getElementById('start-screen-container').classList.add('d-none');
-    document.getElementById('loading-animation-container').classList.remove('d-none');
-}
-
-// This function displays the canvas.
-function showCanvas() {
-    document.getElementById('loading-animation-container').classList.add('d-none');
-    document.getElementById('canvas-container').classList.remove('d-none');
 }
 
 // This function opens all text containers specified by the parameters id1 and id2, which are defined in the index.html file.
